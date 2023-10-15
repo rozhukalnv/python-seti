@@ -1,0 +1,4115 @@
+-lp 8888 -q 1 < fileperedavaemii.3gb
+
+nc valerii11@192.168.1.100 8888 file.3gb
+du-h file.3gb
+watch "du -h file.3gb
+
+
+
+fens
+fens
+8 месяцев назад
+бинарщину большого размера недоводилось передавать а дампы сливал всегда так ssh host 'mysqldump dbname | gzip' > dbname_date.sql.gz ну или через пайп кинуть в gzip -d и потом либо в файл либо опять же через еще один пайп уже сразу в БД секьюрно быстро без создания промежуточных файлов"
+
+
+
+Нашел для себя оптимальное решение. Дано: 40 млн мелких файлов. Основная проблема не с копированием, а построением списка файлов. лучший результат показал rsync -avzhe ssh user@ip:/folder/to/copy/ /folder/destination/  (синхронизировать удаленную папку с локальной) У меня вышло 36-50 mb/sec. Можно еще выжать скорости если делать это не через ssh а настроить rsync сервер. Пробовал так же вариант с архивами в пайп, много нагрузки на ЦПУ, так как там рабочий проект, то это плохо.
+
+
+Отличный пример копирования. Тоже страдал подобной проблемой. Приведенный пример имеет проблему -- производительность на большом количестве мелких файлов. Если объем данных огромен и содержит огромное количество файлов, а также нет места (времени) для создания архива, но передать нужно сейчас и очень быстро  (чтобы получить более высокую скорость передачи данных), рекомендую использовать следующие команды. 
+На стороне получателя данных переходим в каталог, в который необходимо разместить полученные данные, и выполняем такую команду:
+nc -l 12345 | tar xvf -
+На стороне источника данных так же переходим в каталог, в котором размещён передаваемый каталог, и выполняем такую команду:
+tar -cf - ./our_directory/ | nc target_host 12345
+вариант с выводом объема трафика 
+tar -cf - ./our_directory/ | pv | nc target_host 12345
+Где:
+12345 - номер порта, по которому будет производиться обмен данными;
+target_host - ip-адрес или hostname компьютера, на который будут передаваться данные.
+nc -lp 8888 -q 1   ;    nc 192.168.1.100 8888 > MolchanovSeti.mp4	;watch du -h "MolchanovSeti.mp4"
+
+
+
+
+tmux ;tmux, htop, cmus, ranger, vim   
+
+
+ IP статические адреса alt2 192.168.1.10
+                       sshvrn 192.168.1.108
+                       ubuntu11 192.168.1.108
+                       alt1 eth0:192.168.1.105	wlan0:192.168.1.107
+
+
+rsync -azvP '-e ssh -p 22' /run/media/alt1/120 valerii11@192.168.1.108:/var/931g/backup_29.04.21
+
+rsync -Pr '-e ssh -p 8022' /run/media/alt1/1234-5678/ketov_web.08.05.21.mp4 u0_a119@192.168.1.102:.
+rsync -azvP '-e ssh -p 22' ./mklocatedb  alt2@192.168.1.104:.
+ssh1 -L1234:localhost:12345
+rsync -azvP '-e ssh -p 22' /run/media/alt1/120/otus_admin_2020.12.07.21 alt2@192.168.1.104:/run/media/931/buckap_12.07.21
+# ochistka /var/log
+find /var/log -type f -exec cp /dev/null {} \;
+find /home/alt1/.cache -type f -exec rm {} +
+du -h /home/| sort -hr | head -n 10
+# du . --max-depth=1 -ah | sort -rh | head -10
+
+#udalenie_probelov_v_imenach
+awk '{print "\"" $0 "\""}' >/home/user/duplicates.to.delete.ok.txt
+#udalenie_file_povtor_bolche_1_raza
+xargs rm < /home/user/duplicates.to.delete.ok.txt
+
+
+
+# for_test.sh
+#!/bin/bash
+for i in {1..5}
+do
+echo "number: $i"
+done
+
+
+
+
+#sed
+
+
+sed -i.bak '/text/s/patern1/patern2/' file
+Найти в файле строку с text, произвести замену по шаблону, сохранить старый файл как file.bak
+#в качестве разделителя необязательно использовать слеши
+$ echo 1214 | sed -e 's[1[5[g'
+5254
+#К счастью, sed позволяет нам самостоятельно задавать символы-разделители для использования их в команде замены. Разделителем считается первый символ, который будет встречен после s:
+
+$ sed 's!/bin/bash!/bin/csh!' /etc/passwd
+#sed_ochistit_ot_kommentariev
+sed '/^#\|^$\|*#/d' /etc/httpd2/conf/httpd2.conf_copy
+
+
+#backup
+tar -czvf - / | ssh alt2@192.168.1.104 "cat > /run/media/931/backup_09.08.21.tar.gz"
+
+#szenarii_argumenti_useradd
+
+useradd -m $1
+passwd $1
+mkdir -p /shared/$1
+chown $1.users /shared/$1
+chmod 775 /shared/$1
+ln -s /shared/$1 /home/$1/shared
+chown $1.users /home/$1/shared
+
+# udalenie_pustich_direkor
+find . -depth -type d -empty -exec rmdir {} \;
+#/etc/resolv.conf: nameserver 94.140.14.14 94.255.29.222
+
+
+grep -rin --include="*.py" "возникла ошибка"
+Дальнейший параметр --include="*.py" говорит grep, что нас интересуют только файлы, заканчивающиеся на .py,
+
+# ssh_port_forwarding
+-->tunnel_s udalenn_servera_na _local_mashin
+ssh -L local_port:udalenn_adres:udalen_port user@server
+--> -R esli_nuzno_chtobi_localnii_servic_bil_dostupen_na_udalennoi_mashine
+##ssh-keygen;; ssh-keygen;.ssh/servers; ssh-copy-id -i .ssh/jumphost.pub router1;; ssh -i .ssh/jumphost router1;; vim .ssh/config;; Host router1 Hostname 192.168.31.151 User root IdentityFile ~/.ssh/jumphost;; ssh router1;;;
+
+du -h /home | sort -hr | head -n 10
+
+#htop
+Еще удобно в htop использовать такую тяжелую артиллерию как strace,  иногда бывает необходимо для дебага зависшего процесса посмотреть syscalls  процесса и понять что же с ним происходит.  Для этого нужно поставить соответственно саму утилиту strace и по нажатию на клавишу s на выбранном процессе мы попадем в режим его трассировки.  С помощью syscalls проще понять, к каким файлам обращается наш процесс, какие сетевые порты задействованы, какие ресурсы использует и т.д. Рекомендую к использованию чтобы уметь разобираться в особенностях работы ПО и понимать что происходит.
+
+#tmux
+tmux set-option -g -q mouse on
+#logger
+exemple.sh &>exemple.sh.log
+exemple.sh 2>&1 | logger
+exemple.sh  2>&1 >/dev/null | logger -p user.error -t exemple.sh
+#!/bin/bash
+
+exec > >(logger  -p local0.notice -t `basename "$0"`)
+exec 2> >(logger  -p local0.error -t `basename "$0"`)
+
+echo "error" >&2
+echo "notice"
+#perenapravlenie_poiasnenie
+    exemple.sh 2&>1 > exemple.sh.log
+
+Не правильно. У вас идет вывод stdout в файл, а stderr попадет на stdout (к тому же опечатка, "&" должен идти после ">", а не перед), т.е. stderr в файл не попадет. Нужно делать наоборот, т.к. перенаправление «читается» справа налево:
+
+exemple.sh >exemple.sh.log 2>&1
+
+А еще лучше и проще делать так:
+
+exemple.sh &>exemple.sh.log
+
+тогда сразу и stderr и stdout пойдут в файл.
+А еще лучше и проще делать так:
+
+exemple.sh &>exemple.sh.log
+
+тогда сразу и stderr и stdout пойдут в файл.
+
+Пояснение на примере
+$ (echo "stdout" ; echo "stderr" >&2 )
+stdout
+stderr
+$ (echo "stdout" ; echo "stderr" >&2 ) 2>&1 >/dev/null
+stderr
+$ (echo "stdout" ; echo "stderr" >&2 ) >/dev/null 2>&1
+$ (echo "stdout" ; echo "stderr" >&2 ) &>/dev/null
+
+
+2>&1 >>/var/log/our_wifi
+
+
+А у вас молоко убежало stderr в лог не попадает.
++3
+amarao
+10.11.2014 в 23:46
+2>&1 разве не оно?
+0
+Angel2S2
+11.11.2014 в 11:14
+Нет, не оно (в данном, конкретном случае). Перенаправление «читается» справа налево. Т.е. у вас сначала идет вывод stdout в файл, а потом уже stderr перенаправляется в stdout. Надо делать наоборот:
+
+>>/var/log/our_wifi 2>&1
+
+
+Или, что даже проще, так (stdout и stderr перенаправит в файл):
+
+&>>/var/log/our_wifi
+
+
+
++2
+Angel2S2
+11.11.2014 в 11:21
+PS: Пояснение на примере:
+
+$ (echo "stdout" ; echo "stderr" >&2 )
+stdout
+stderr
+$ (echo "stdout" ; echo "stderr" >&2 ) 2>&1 >/dev/null
+stderr
+$ (echo "stdout" ; echo "stderr" >&2 ) >/dev/null 2>&1
+$ (echo "stdout" ; echo "stderr" >&2 ) &>/dev/null
+
+
+Две последние команды равноценны.
++3
+truezemez
+11.11.2014 в 13:05
+Немного дополню Angel2S2.
+
+При старте шелла создаются 3 дескриптора: stdin, stdout, stderr. Нас интересуют последние 2. Представим такой псевдокод:
+
+stdout = fopen('/dev/tty')
+stderr = fopen('/dev/tty')
+
+
+Когда мы делаем так:
+
+2>&1 >> /tmp/file.log
+
+
+Происходит что-то такое:
+
+stderr = stdout #stderr -> /dev/tty
+stdout = fopen('/tmp/file.log') #stdout -> file
+
+
+А когда мы делаем так:
+
+>> /tmp/file.log 2>&1
+
+
+Получается такое:
+
+stdout = fopen('/tmp/file.log') #stdout -> file
+stderr = stdout #stderr -> file
+
++2
+Indexator
+10.11.2014 в 23:50
+Дык, вроде ж stderr перенаправляется в stdout, а stdout добавляется в /var/log/our_wifi… Что-то разве не так или я чего-то недогоняю?
+0
+Angel2S2
+11.11.2014 в 11:16
+Нет, не так. Выше объяснил.
+
+#uvelich_razmera_lvm
+lvextend /dev/vg/lv931 -L +39G -r; df
+ ffmpeg -i video.mp4 -vn -ar 44100 -ac 2 -ab 192 -f mp3 audio.mp3
+for a in ./*.mp4; do ffmpeg -i ./Тема 9. IP адресация.mp4 -vn -ar 44100 -ac 2 -ab 192 -f mp3 ./Тема 9. IP адресация.mp3; done
+ffmpeg -i input.mp4 -vn -ab 320 output.mp3
+youtube-dl -x --audio-format mp3 --playlist-start 1 --playlist-end 
+echo "complete -cf man which" >> ~/.bashrc
+
+alma1 .107
+alma2 .103
+alma3 .105
+
+hostnamectl set-hostname alma1
+nmcli c add type team con-name teams3s8 ifname team1 team.runner activebackup
+nmcli c add type team-slave ifname enp0s3 master team1
+nmcli c add type team-slave ifname enp0s8 master team1
+nmcli con add type vlan con-name vlan10 dev team1 id 10 ipv4.address 10.0.1.1/24 ipv4.method manual
+
+nmcli con up teams3s8
+
+nmcli con add type ethernet con-name internet ifname enp0s9
+nmcli con mod teams3s8 ipv4.gateway 10.0.1.2
+nmcli con up teams3s8
+nmcli con mod vlan2 ipv4.gateway 10.0.2.2
+nmcli con up vlan2
+nmcli con modify teams3s8 team.runner activebackup
+nmcli con mod teams3s8 ipv4.addresses 10.0.1.1/24
+nmcli con show teams3s8
+nmcli con add type team con-name teams3s8 ifname myteam
+team.runner activebackup ipv4.addresses 10.0.1.2/24
+ipv4.method manual
+nmcli con add type team-slave ifname enp0s3 master myteam
+nmcli con add type team-slave ifname enp0s8 master myteam
+nmcli con up teams3s8
+teamdctl myteam state
+nmcli con add type team con-name teams9s10 ifname myteam2
+team.runner lacp ipv4.addresses 10.0.2.2/24 ipv4.method manual
+nmcli con add type team-slave ifname enp0s9 master myteam2
+nmcli con add type team-slave ifname enp0s10 master myteam2
+nmcli con show
+teamdctl myteam2 state
+nmcli con add type vlan con-name vlan30 dev enp0s9 id 30 ipv4.address 10.0.3.1/24 ipv4.method manual
+echo 1 >> /proc/sys/net/ipv4/ip_forward
+
+nmcli c add type bridge con-name br0
+nmcli c add type bridge-slave eth1
+nmcli c add type bridge-slave ifname vlan2 master br0
+#~/ffmpeg-batch.sh
+Всего у вас пять переменных; исходное расширение, конечное расширение, исходный каталог, целевой каталог и ваши параметры. Параметры - это любые опции, которые вы хотите использовать в команде FFMPEG. Есть и другие способы сделать это, но проще передать их как строку
+
+/etc/systemd/network/70-vbox.network
+[Match]
+Name=eth2
+
+[Network]
+Address=10.0.2.1/24
+systemctl restart systemd-networkd.service
+/etc/systemd/network/##-name.network
+# /etc/systemd/network/50-static.network
+[Match]
+Name=enp2s0
+[Network]
+Address=192.168.0.15/24
+Gateway=192.168.0.
+find . -iname *.mp4 -print0 | xargs --null cp otus-admin.2020.mp4
+for file in *; do mv Вебинар_старый.mp4 Вебинар_старый.mp4; done
+ssh -L local_port:remote_ip:remote_port user@hostname.com
+##find-raboch;;find . -iname "*.mp3" -print0 | xargs -0 -I'{}' mv '{}' matiacov-28.06.22.mp3
+curl ifconfig.co
+curl -4 wttr.in/Volgodonsk
+tar -czf ../alt1.tar.gz .
+tar -czf "../${PWD}##*/.tar.gz" .
+nmcli connection modify dd-wrt ipv4.addresses 192.168.1.113/24 ipv4.gateway 192.168.1.1  ipv4.dns 94.140.14.14 ipv4.dns 94.140.15.15 ipv4.method manual
+nslookup mc.yandex.ru
+PS1="\e[0;36m\A \w$ \e[m"
+find . -iname *UNИX* -print0 | xargs -0 -I '{}' cp '{}' unix-2011.mp3/
+FILES_PATH=My\ path\ with\ whitespaces
+ffmpeg -ss 00:46:00 -t 01:50:34 -i 4.semchenko.mp3 -c copy 4-1.mp3
+ffmpeg -ss 00:46:00 -to 02:19:34 -i 4.semchenko.mp3 -c copy 4-1.mp3
+sudo ls -R / > ls-root.txt
+. nmcli con mod "static" ipv4.addresses "10.0.0.20/24" 10.0.0.100 
+#dd-zapis-iso-fleshku
+lsblk | grep disk
+wipefs -a /dev/sdX
+pv lubuntu-22.04-desktop-amd64.iso | dd oflag=dsync of=/dev/sdd bs=1M;sync
+
+#grub-install-rescue
+ls
+set
+unset
+insmod
+ls
+(hd0) (hd0,msdos3) (hd0,msdos2) (hd0,msdos1)
+(hd1) (hd1,msdos2) (hd1,msdos1)
+set setprefix=(hd0,1)/boot/grub
+root=(hd0,1)
+insmodinsmodnormal
+ext2
+normal
+vboxmanage snapshot "Windows 10 (Орг. администрирования)" restore Clean
+vboxmanage snapshot "Windows 2019 (Орг. администрирования)" restore Clean
+vboxmanage snapshot "Debian 11" restore Clean
+vboxmanage clonevm "Debian 11" --name "GW" --register
+vboxmanage snapshot "GW" take Clean
+vboxmanage natnetwork add --netname OrgNat-192-168-1 --network 192.168.1.0/24 --enable --dhcp off --ipv6 off
+vboxmanage natnetwork add --netname OrgNat-10-0-1 --network 10.0.1.0/24 --enable --dhcp off --ipv6 off
+vboxmanage natnetwork add --netname OrgNat-172-16-1 --network 172.16.1.0/24 --enable --dhcp off --ipv6 off
+vboxmanage modifyvm "Debian 11" --nic1 natnetwork --nat-network1 OrgNat-192-168-1
+vboxmanage modifyvm "Debian 11" --nic2 none
+vboxmanage modifyvm "GW" --nic1 natnetwork --nat-network1 OrgNat-192-168-1
+vboxmanage modifyvm "GW" --nic2 natnetwork --nat-network2 OrgNat-10-0-1
+vboxmanage modifyvm "Windows 2019 (Орг. администрирования)" --nic1 natnetwork --nat-network1 OrgNat-10-0-1
+vboxmanage modifyvm "Windows 2019 (Орг. администрирования)" --nic2 natnetwork --nat-network2 OrgNat-172-16-1
+vboxmanage modifyvm "Windows 10 (Орг. администрирования)" --nic1 natnetwork --nat-network1 OrgNat-172-16-1
+vboxmanage modifyvm "Windows 10 (Орг. администрирования)" --nic2 none
+
+
+vboxmanage list vms
+vboxmanage list vms
+vboxmanage import 'R1 (Орг. администрирования).ova'
+vboxmanage snapshot "ISP (Орг. администрирования)" take Clean
+ sudo virt-install 
+--virt-type=kvm 
+--name ub20 
+--ram 1024 
+--vcpus=1 
+--hvm 
+--cdrom=/var/lib/libvirt/boot/ubuntu-20.04.4-live-server-amd64.iso 
+--os-variant=ubuntu20.04 
+--hvm 
+--cdrom=/var/lib/libvirt/boot/ubuntu-20.04.4-live-server-amd64.iso 
+--network=bridge:virbr0,model=virtio 
+--graphics vns --disk path=/var/lib/libvirt/images/ub20.qcow2,size=10,bus=virtio,format=qcow2
+
+vboxmanage list vms
+vboxmanage import 'R1 (Орг. администрирования).ova'
+vboxmanage snapshot "ISP (Орг. администрирования)" take Clean
+rpm -qa 
+cd / && du -x -d 1 -h 
+(из под рута, так как у пользователя не ко всем каталогам есть доступ, ругаться будет)
+далее смотрите какой каталог занимает больше всего мета, заходите в него и запускаете уже там du -x -d 1 -h
+Так потихоньку проймете что место занимает.. А потом уже можно будет начать думать что с этим делать.
+
+Ну или хлопая <Ctrl><Space> в mc на каталоге можно узнать сколько он места занимает
+rpm -qa|grep kernel-ima
+если все это крутится на сервере и собираемся подрубаться по VNC;vboxmanage startvm --type headless ubuntu1604
+inet6 nc.28.06.22
+ sudo usermod -a -G wheel user
+vboxmanage startvm --type headless 5e50a3b9-6134-4357-adf2-9f65e879a029
+ https://eax.me/vboxmanage/
+помощью vboxmanage
+частности, vboxmanage.
+виртуалок, делается с помощью vboxmanage.
+vboxmanage list systemproperties
+vboxmanage setproperty machinefolder /home/eax/virtualbox
+vboxmanage list ostypes
+vboxmanage list ostypes | egrep ^ID
+vboxmanage createvm --name ubuntu1604 --ostype Ubuntu_64 --register
+ https://eax.me/vboxmanage/
+vboxmanage modifyvm ubuntu1604 --cpus 1 --memory 512 --audio none \
+vboxmanage createhd \
+vboxmanage storagectl ubuntu1604 --name ide-controller --add ide
+vboxmanage storageattach ubuntu1604 --storagectl ide-controller \
+vboxmanage storageattach ubuntu1604 --storagectl ide-controller \
+vboxmanage
+vboxmanage
+vboxmanage
+vboxmanage
+vboxmanage showvminfo ubuntu1604 | grep VRDE
+ https://eax.me/vboxmanage/
+vboxmanage startvm ubuntu1604
+vboxmanage startvm --type headless ubuntu1604
+vboxmanage storageattach archlinux1 --storagectl ide-controller \
+vboxmanage controlvm archlinux1 pause
+vboxmanage controlvm archlinux1 resume
+vboxmanage controlvm archlinux1 poweroff
+vboxmanage modifyvm ubuntu1604 --natpf1 "ssh-forwarding,tcp,,22001,,22"
+vboxmanage showvminfo ubuntu1604 | grep Rule
+vboxmanage modifyvm ubuntu1604 --natpf1 delete ssh-forwarding
+vboxmanage list vms
+vboxmanage list vms --long | egrep '^(Name|State)'
+vboxmanage list runningvms
+vboxmanage modifyvm ubuntu1604 --name ubuntu1
+ https://eax.me/vboxmanage/
+vboxmanage clonevm ubuntu1 --name ubuntu2 --register
+vboxmanage natnetwork list
+vboxmanage natnetwork add --netname UbuntuNat --network 10.0.4.0/24 \
+vboxmanage natnetwork modify --netname UbuntuNat --ipv6 on
+vboxmanage natnetwork remove --netname UbuntuNat
+vboxmanage modifyvm ubuntu1 --nic2 natnetwork --nat-network2 UbuntuNat
+vboxmanage modifyvm ubuntu2 --nic2 natnetwork --nat-network2 UbuntuNat
+vboxmanage unregistervm ubuntu2 --delete
+vboxmanage export ubuntu2 --output ubuntu2.ova
+vboxmanage import ubuntu2.ova
+vboxmanage import ubuntu2.ova --vsys 0 --vmname ubuntu2
+Это, разумеется, далеко не полный список возможностей vboxmanage.
+ https://eax.me/vboxmanage/
+и vboxmanage --help.
+ https://eax.me/vboxmanage/
+Никак не могу сообразить как через консоль, с помощью vboxmanage прописывать
+vboxmanage modifyvm ubuntu1604 --natpf1 "ssh-forwarding,tcp,,22001,,22"
+ https://eax.me/vboxmanage/
+ https://eax.me/vboxmanage/
+lsof  sed -ne 1p; / 253,1 /p
+#cisco-switch-access-vlan;int fa1/1;switchport mode access;switchport access vlan 11;end;wr;sh vlan brief;
+#cisco-switch-trunk;int fa0/1;switchport mode trunk;end;wr;show int tr;не-забыть-создать-влан-чтобы-транк-порт-мог-его-видеть;
+#cisco-switch-trunk-oba-interf;int fa0/1;switchport mode tr;end;wr;int fa0/1---//--;show int tr;доступны-только-созданные-вланы--создать-нужные-вланы;show int tr;show vlan brief;conf t;vlan 10;vlan 11;end;wr;sh vlan br;
+#cisco-router-subinterface;conf t;int fa0/0.2;encapsulation dot1Q 2;ip addr 85.0.0.1 255.255.255.252;show ip int brief;
+#semchenko-urok6-cisco-marshrutiz-po-umolch;ip route 0.0.0.0 0.0.0.0 85.0.0.5;show ip ro;
+#cisco-dhcp;ip dhcp pool lan ;network 192.168.0.0 255.255.255.0;default-router 192.168.0.1;dns-server 8.8.8.8; exit;int fa0/0;
+no shut;ip addr 192.168.0.1 255.255.255.0;wr
+#cisco-nat;int fa0/0;ip nat inside;int fa0/1;ip nat outside;exit;access-list 1 permit 192.168.0.0 0.0.0.255;
+ip nat inside source list 1 interface fa0/1;end;wr;
+#cisco-dhcp-relay;1)на dhcp-servere открываем сервис dhcp,2)создаем poolы,3)назначаем гетвей каждому пулу;4)dns-server;
+#cisco-dhcp-relay-пояснение;1.весь бродкастовый траффик приходит на вутренний порт пограничного роутера -2.рутер- точка сосредоточения траффика внутренних сетей .можем на роутере создать много пулов для разных клиентов юу нас таких роутеров дофига и мы не хотим много таких роутеров --хотим один dhcp-server .3 сообщение discaver rassilaetsia na broadcast внутри.. .4 dhcp-server snaruzhi ,dhcp agenti relay retransliruyut .5 dhcp-relay na routere -- пересылает .6 начтройкa dhcp-servera  
+#cisco-router-on-stick-poyasnenie;;..vlan 2; int range fa0/1-2; sw m ass; sw ass vlan 2;  
+
+#cisco-packet-tracert-!!install; tar -zxvf Packet\ Tracer\ 7.2\ for\ Linux\ 64\ bit.tar.gz; bash install;sudo  bash set_ptenv.sh;packettracer;PacketTracert731!!;
+##cisco-packet-tracer-install;;Вместо этого, если вы хотите установить этот или любой другой пакет "* .deb" автоматически разрешая зависимости, запустите установку напрямую, используя команда "apt-get, aptitude или apt" по вариант "установить", как показано в следующем примере с помощью следующей команды command;; sudo apt install ./PacketTracer_731_amd64.deb;;
+
+#cisco-l3-switch-7.mp4-02:00min;;sh vl br; int ra fa0/1-2; sw m ass;sw ass vl 10; do sh vl br; int vlan 1; ip addr 10.0.0.1; no sh ;
+#packettracer-install;sudo dpkg-deb -I PacketTracer_731_amd64.deb;sudo,dialog,xdg-utils,gtk-update-icon-cache,libgl1-mesa-glx,libpulse0,libnss3,libxss1,libasound2,libxslt1.1,libxkbcommon-x11-0;sudo apt install sudo dialog xdg-utils gtk-update-icon-cache libgl1-mesa-glx libpulse0 libnss3 libxss1 libasound2 libxslt1.1 libxkbcommon-x11-0;sudo dpkg -i PacketTracer_731_amd64.deb;sudo apt install -f;sudo apt install --fix-broken;sudo apt install ./Descargas/PacketTracer_731_amd64.deb;
+
+#cisco-поснение-тегированный-не-тегированный-траффик;;на порт приходит нетегированный траффик,сам порт назначен таким то вланом,траффик внутри свича идет с этим вланом.
+#cisco-router-on-stick;;
+#cisco-gre-8.mp4-00:50min;крайний-роутер-r1;;conf t;int fa0/0;ip add 192.168.50.1 255.255.255.0; ip nat inside; no shut; int fa0/1
+; ip nat outside; ip add 1.0.0.2 255.255.255.252; exit; ip route 0.0.0.0 0.0.0.0 1.0.0.1(на роутер r3);access-list 1 permit 192.168.50.0 0.0.0.255' ip nat inside source list 1 int fa0/1; end; wr;;r1-nastroika-tunnell;; int tun 0; ip addr 10.0.0.1 255.255.255.252;--указать какой адресс будет в заголовке--sourse-destination;; tunnel destination 2.0.0.2 (внешний адрес другого routera-r2);  tunnel source  fa0/1(ip-address возьми с int fa0/1); end; sh ip int br; sh ip ro; wr;--в одну сторону траффик будет ходить,теперь надо настроить зеркально на другом конце-routere; r2--conf t; int tun 0;  
+
+
+#lvm-not-mount-cant-read-sub=perblock;badblocks -p 0 -svn /dev/maper/vg-lv931;fsck.ext4 -y --build-fs /dev/mapper/vg-lv931;
+ fsck.reiser4 -y --fix /dev/mapper/vg-lv931;
+
+ffmpeg -i 6.mp4 -vn -ab 320 6.mp3
+#cisco-stiranie-proshivk;;conf t;do erase startup-config
+nmap -sn 192.168.1.0/24 | grep Nmap scan report for | cut -d  -f5,6
+qq
+#vim-command-macros
+vim - start editor in console
+2:11 i - insert mode
+esc - return to command mode
+:w - write changes
+:w name.txt - write changes to file 
+:q - quit vim
+:q! - quit without saving
+:wq - write and quit vim
+hjkl - keys for moving in command mode
+4:36 a - going to the right from cursor
+A - going to the end of line
+o - make new line to the bottom of cursor
+O - make new line to the up of cursor  
+gg - going to the beginning of the document
+G - going to the end of the document
+w - going to the next word
+b - going to the last word
+e - going to the end of the next word
+2w - going to the next second word(any number to use)
+3b - going three words back
+3e - going to end of third word
+7:18 f2 - find next symbol '2'(any synbol to find)
+/word - find 'word'
+/word n - find 'word' then next 'word'
+?word - find 'word' to the beginning of document
+mx - mark the place with name 'x'  where is cursor
+'x - going to the place with mark 'x'
+v - visual mode
+9:33 x - in visual mode cut the text
+P - insert text from buffer to the left from cursor
+p - insert text to the right from cursor
+dw - delete word on cursor
+u - undo changes in visual mode
+dd - delete line
+2dd - delete 2 lines
+cw - change word
+C - change text from cursor to the end of the line
+D - delete words to the end of the line
+V - mark in visual mode whole line
+#vim-macros
+12:49 q1 - macros with name '1' start and stop with q
+@1 - do macros 1 time
+10@1 - doing macros 10 times
+#vim-config-variant
+" Default Vim settings begin
+" ---------------------------
+" Vim settings
+set mouse=a                                     " Enable mouse
+set number                                      " Show line numbers
+set showmatch                                   " Show matching brackets
+set smarttab                                    " Enable smarttab
+set incsearch                                   " Incremental search
+set noswapfile                                  " Do not create swp file
+set cursorline                                  " highlight current line
+set laststatus=2                                " Airline
+" set backspace=indent,eol,start                  " Backspace for dummies
+set ignorecase                                  " Case insensitive search
+set smartcase                                   " Case sensitive when uc present
+set wildmenu                                    " Show list instead of just completing
+set wildmode=list:longest,full                  " Command <Tab> completion, list matches, then longest common part, then all.
+set listchars=tab:›\ ,trail:•,extends:#,nbsp:.  " Highlight problematic whitespace
+set fileformat=unix                             " UNIX fileformat
+" set endofline                                   " Newline at the end of file
+set autoread                                    " Autoreload changes to file
+set noundofile                                  " Do not create undo files
+set undodir=~/.vim/undodir                      " Store undo files in a directory
+set tabstop=2                                   " Two space indentation
+set shiftwidth=2                                " Number of space during (auto)indent
+set expandtab                                   " Use spaces for tabs
+set autoindent                                  " Copies indent from current line to next line
+set smartindent                                 " Copies indent from current line to next line
+set nobackup
+set relativenumber
+set splitbelow                                  " Add new splits on right/below existing.
+set splitright
+set lazyredraw                                  " Redraw only when needed.
+set linebreak                                   " Wrap lines at better places.
+set hidden                                      " Allow hidden buffers with unsaved content.
+set nostartofline                               " Don't move cursor to start of line after various commands.
+set wildignore+=.git/*,*.swp,*.swo              " Ignore these in various cases.
+set scrolloff=8                                 " Start scrolling when certain distance from edges of window.
+set sidescrolloff=15
+set sidescroll=1
+set suffixesadd+=.js                            " Allow use of `gf` for relative imports in JS.
+set iskeyword+=-                                " Count '-' as part of a word; useful for CSS in particular.
+set modeline                                    " Allow modeline settings.
+set modelines=50                                " TODO: Apparently insecure sometimes.
+set encoding=utf-8                              " sane text files
+set softtabstop=2                               " sane editing
+set hlsearch
+" set guifont=Anonymous\ Pro\ for\ Powerline\ 11  " Default font settings
+## /dev/sd*--error
+# dd if=/dev/sda3 of=/file
+# losetup -e des /dev/loop0 /file
+# mount -t ext4 /dev/loop0 /mnt
+
+find . -iname "*.pdf" -exec  cp {} setev-inzhiner-2020.pdf \;
+find . -iname "* *.mp4" -exec rename s/ /_/g {} \;
+find /path_to_dir/ -depth -name "* *" -execdir rename s/ /_/g "{}" \;
+##ip-search;;grep -E -o "([0-9]{1,3}[\.]){3}[0-9]{1,3}"
+find . -type f -iname *.pdf -print0 | parallel -0 "pdftotext  -q {} - | grep -i --with-filename --label=[{}] --color=always --context=5 linux"  > pdftotext-linux.19.11.22.txt 
+
+#ucheba-knigi-adm-linux;;
+Администрирование системы:
+1. Немет Эви и др. - Unix и Linux: руководство системного администратора 4 / 5 изд-е (4 писалось с ее участием, 5-е издавалось и когда она уже пропала; многие считают, что 4-е лучше. из 5-го можно почерпнуть разделы касающихся devops/cloud и прочего ansible).
+2. Брайан Уорд - Внутреннее устройство Linux
+3. Кетов Дмитрий - Внутреннее устройство Linux, 2-е изд-е
+4. Робачевский А.М. - Операционная система UNIX, 2-е изд-е
+
+Дальше идут более углубленные по CLI (Shell и Bash; sh считается устаревшим, но на нем написано много чего внутри ос для обратной совместимости, поэтому будет не лишним):
+5. Купер Мендель - Искусство программирования на языке сценариев командной оболочки (икона по башу, хоть и по старой версии, в оригинале звучит как Mendel Cooper - Advanced Bash-Scripting Guide. An in-depth exploration of the art of shell scripting)
+6. Тейнсли Дэвид - Linux и UNIX программирование в shell. Руководство разработчика
+7. Шоттс У. - Командная строка Linux. Полное руководство. 2-е изд-е
+8. Тейлор Дейв, Перри Брендон - Сценарии командной оболочки. Linux, OS X и Unix. 2-е изд-е
+
+Иное уже по мере возникновения задач. Есть отдельные расширенные материалы (по сути разжеванные маны и howto) по отдельным сервисам, системам и обвязкам - systemd / iptables/nftables / postfix и т.п.
+
+Остальные книги в той или иной степени содержат один и тот же материал. Если хочется просто научиться на уровне пользователя - любой книги того же Колисниченко будет достаточно. Если хочется овладеть серьезно - лучше сразу готовиться по материалам для сертификации RHCSA/RHCSE того же RHEL (RH124,RH134,RH294 - student workbook были на трекере или ищутся в сети) или по материалам LPIC-1/2/3 (видеоматериал недавно был тут, от 2014 г.). Совершенно не лишним будет знание C (Керниган и Ричи) и последующее изучение литературы по ядру Linux (Роберт Лав - Ядро Linux. Описание процесса разработки, 3-е изд-е)
+
+Ну и еще напоследок. Считается, что каждый линуксоид должен постигнуть LFS (Linux For Scratch). Это, по сути, собственная сборка дистрибутива, которая сильно помогает разложить в голове все по полочкам. Есть ресурс в сети с книгой на русском под разные системы инициализации.
+Если сдюжил и хочется еще - есть Beyond Linux For Scratch - сборка и установка различных библиотек и системных утилит. Есть русскоязычная книга из 2-х томов за 2014 год версии 7.4.
+
+##sony-expriaz3-flachtool-ubuntu;;
+
+# Удаляем конфликтный пакет (потом можно поставить обратно)
+$ sudo apt remove modemmanager
+# Качаем правила для определения андроида и загружаем их
+$ sudo wget https://raw.githubusercontent.com/M0Rf30/android-udev-rules/master/51-android.rules -P /etc/udev/rules.d/
+$ sudo udevadm control --reload-rules
+# Вносим себя <username> в группы доступа к сериальным портам и логинимся с новыми правами
+$ sudo usermode -a G dialout,uucp <username>
+$ su -l <username>
+# Запускаем флештул
+$ ./SP_Flash_Tool_exe_Linux_v5.1708.00.100/flash_tool.sh
+
+LD_LIBRARY_PATH=$dirname:/usr/lib/x86_64-linux-gnu/
+##swap-uvelich-razmer-4G;;  swapoff -a;; fallocate -l 4G /swapfile;; chmod 600 /swapfile;; mkswap /swapfile;; swapon /swapfile;; 
+free -m;
+##trans-shell-ctrl-x;; /home/$USER/trans_zenity.sh;; chmod +x trans_zenity.sh;; cp /home/$USER/trans_zenity.sh /usr/bin/;; 
+
+sshfsub=sshfs ub1@ub1-140: mnt/net
+sshfsrspb=sshfs rspb1-desctop: mnt/netrspb1/
+osinfo-query os
+##kvm-install-almalinux;;
+sudo virt-install --virt-type=kvm --name almalinux8 --ram 2048 --vcpus=2 --os-variant=rhl8.0 --hvm --cdrom=/media/ub2/65271f04-f473-4cc9-bc73-21f62289a6b1/kvm-06.12.22/AlmaLinux-9.0-x86_64-boot.iso --network=bridge:virbr0,model=virtio --graphics vnc --disk path=/media/ub2/65271f04-f473-4cc9-bc73-21f62289a6b1/kvm-06.12.22/almalinux8.qcow2,size=10,bus=virtio,format=qcow2
+
+watch -n 1 ps --ppid 1
+Сервер под нагрузкой тормозит - тяжелые запросы к кассандре и ELK отрабатывают сильно медленнее чем раньше и чем другие аналогичные сервера.
+Мы сняли с сервера нагрузку, но оставили кассандру и ELK запущенными. Надо понять что делает сервер тормозным.
+Ответ
+
+Сначала делаем команду top, обратить внимание на sys time и 35% CPU, которое отъедало systemd. Соответственно, что-то там усиленно ядро творило в своем sys time
+
+Чтобы увидеть что именно делает systemd можно запустить strace -c -p 1, это даст таблицу сисколов, среди которых waitid отъедал много ресурсов.(78% CPU времени кушало). Данный системный вызов используется во время ожидания изменения состояния процесса. Отсюда предположение - systemd что-то порождает, оно падает, случается waitid и все это добро происходит быстро и в больших кол-вах
+
+Далее смотрим что именно systemd может так усиленно плодить: watch -n 1 ps --ppid 1. Тут мы видим какие процессы активно форкаются. И в таблице вывода замелькали сомнительные a.out и a.sh
+
+Поиск по имени (find / -name "a.sh" 2> /dev/null) привел к скрипту /var/games/a.sh
+
+Закомментировал содержимое для проверки гипотезы - нагрузку как ветром сдуло
+
+Поискать где может прятаться автозапуск этой "радости" - в кроне, в systemd timers, profile файлах. Либо спрятано с особой выдумкой, либо было запущено вами вручную с последующей чисткой history.
+lsof -i 4UDP -n
+###grep-no-coments;grep -v '^$\|^\s*\#' some-config.conf;;
+grep -v '^$\|^\s*\#' some-config.conf
+ nmcli con add type ethernet con-name internet ifname enp0s9
+﻿#!/bin/bash
+
+export IPT="iptables"
+
+# Внешний интерфейс
+export WAN=eth0
+export WAN_IP=85.31.203.127
+
+# Локальная сеть
+export LAN1=eth1
+export LAN1_IP_RANGE=10.1.3.0/24
+
+# Очищаем правила
+$IPT -F
+$IPT -F -t nat
+$IPT -F -t mangle
+$IPT -X
+$IPT -t nat -X
+$IPT -t mangle -X
+
+# Запрещаем все, что не разрешено
+$IPT -P INPUT DROP
+$IPT -P OUTPUT DROP
+$IPT -P FORWARD DROP
+
+# Разрешаем localhost и локалку
+$IPT -A INPUT -i lo -j ACCEPT
+$IPT -A INPUT -i $LAN1 -j ACCEPT
+$IPT -A OUTPUT -o lo -j ACCEPT
+$IPT -A OUTPUT -o $LAN1 -j ACCEPT
+
+# Рзрешаем пинги
+$IPT -A INPUT -p icmp --icmp-type echo-reply -j ACCEPT
+$IPT -A INPUT -p icmp --icmp-type destination-unreachable -j ACCEPT
+$IPT -A INPUT -p icmp --icmp-type time-exceeded -j ACCEPT
+$IPT -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+
+# Разрешаем исходящие подключения сервера
+$IPT -A OUTPUT -o $WAN -j ACCEPT
+#$IPT -A INPUT -i $WAN -j ACCEPT
+
+# разрешаем установленные подключения
+$IPT -A INPUT -p all -m state --state ESTABLISHED,RELATED -j ACCEPT
+$IPT -A OUTPUT -p all -m state --state ESTABLISHED,RELATED -j ACCEPT
+$IPT -A FORWARD -p all -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# Отбрасываем неопознанные пакеты
+$IPT -A INPUT -m state --state INVALID -j DROP
+$IPT -A FORWARD -m state --state INVALID -j DROP
+
+# Отбрасываем нулевые пакеты
+$IPT -A INPUT -p tcp --tcp-flags ALL NONE -j DROP
+
+# Закрываемся от syn-flood атак
+$IPT -A INPUT -p tcp ! --syn -m state --state NEW -j DROP
+$IPT -A OUTPUT -p tcp ! --syn -m state --state NEW -j DROP
+
+# Блокируем доступ с указанных адресов
+#$IPT -A INPUT -s 84.122.21.197 -j REJECT
+
+# Пробрасываем порт в локалку
+#$IPT -t nat -A PREROUTING -p tcp --dport 23543 -i ${WAN} -j DNAT --to 10.1.3.50:3389
+#$IPT -A FORWARD -i $WAN -d 10.1.3.50 -p tcp -m tcp --dport 3389 -j ACCEPT
+
+# Разрешаем доступ из локалки наружу
+$IPT -A FORWARD -i $LAN1 -o $WAN -j ACCEPT
+# Закрываем доступ снаружи в локалку
+$IPT -A FORWARD -i $WAN -o $LAN1 -j REJECT
+
+
+# Включаем NAT
+$IPT -t nat -A POSTROUTING -o $WAN -s $LAN1_IP_RANGE -j MASQUERADE
+
+# открываем доступ к SSH
+$IPT -A INPUT -i $WAN -p tcp --dport 22 -j ACCEPT
+
+# Открываем доступ к почтовому серверу
+#$IPT -A INPUT -p tcp -m tcp --dport 25 -j ACCEPT
+#$IPT -A INPUT -p tcp -m tcp --dport 465 -j ACCEPT
+#$IPT -A INPUT -p tcp -m tcp --dport 110 -j ACCEPT
+#$IPT -A INPUT -p tcp -m tcp --dport 995 -j ACCEPT
+#$IPT -A INPUT -p tcp -m tcp --dport 143 -j ACCEPT
+#$IPT -A INPUT -p tcp -m tcp --dport 993 -j ACCEPT
+
+#Открываем доступ к web серверу
+#$IPT -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+#$IPT -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+
+#Открываем доступ к DNS серверу
+#$IPT -A INPUT -i $WAN -p udp --dport 53 -j ACCEPT
+
+# Включаем логирование
+#$IPT -N block_in
+#$IPT -N block_out
+#$IPT -N block_fw
+
+#$IPT -A INPUT -j block_in
+#$IPT -A OUTPUT -j block_out
+#$IPT -A FORWARD -j block_fw
+
+#$IPT -A block_in -j LOG --log-level info --log-prefix "--IN--BLOCK"
+#$IPT -A block_in -j DROP
+#$IPT -A block_out -j LOG --log-level info --log-prefix "--OUT--BLOCK"
+#$IPT -A block_out -j DROP
+#$IPT -A block_fw -j LOG --log-level info --log-prefix "--FW--BLOCK"
+#$IPT -A block_fw -j DROP
+
+# Сохраняем правила
+/sbin/iptables-save  > /etc/sysconfig/iptables
+Управление и настройка сети в Centos 7/8 с помощью утилиты nmcli • nmcli, centos • IT Draft
+  (Время на чтение: 2 мин.)
+nmcli centos
+
+nmcli (network manager command-line interface) — утилита для настройки сети, которая позволяет использовать Network Manager в консоли
+
+Запустим NetworkManager, проверяем статус
+
+$ sudo systemctl start NetworkManager
+$ sudo systemctl status NetworkManager
+Информация об интерфейсах
+Посмотреть соединения
+
+$ nmcli connection show
+или
+$ nmcli con show
+или
+$ nmcli c s
+
+NAME           UUID                                  TYPE      DEVICE 
+System ens192  085a58e2-18f3-4a76-8717-d1f53aa67642  ethernet  ens192
+Посмотреть только активные соединения
+
+
+$ nmcli con show -a
+Посмотреть полую информацию обо всех интерфейсах
+
+$ nmcli dev show
+Посмотреть полую информацию об интерфейсе ens192
+
+$ nmcli dev show ens192
+Посмотреть статус интерфейсов (активные/не активные)
+
+$ nmcli dev status
+DEVICE  TYPE      STATE      CONNECTION    
+ens192  ethernet  connected  System ens192 
+lo      loopback  unmanaged  --  
+Настройка интерфейсов
+Поднять / отключить интерфейс
+
+$ nmcli con down <connectionName>
+$ nmcli con up <connectionName>
+
+Пример:
+$ nmcli con down "System ens192"
+$ nmcli con up "System ens192"
+Изменить IP-адрес
+
+$ sudo nmcli con mod "System ens192" ipv4.addresses 192.168.1.89/24
+Изменить шлюз (gateway)
+
+$ sudo nmcli con mod "System ens192" ipv4.gateway 192.168.1.1
+Изменить DNS
+
+$ sudo nmcli con mod "System ens192" ipv4.dns 8.8.8.8,8.8.4.4
+Добавить DNS сервер
+
+$ sudo nmcli con mod "System ens192" +ipv4.dns 1.1.1.1
+Удалить DNS сервер
+
+$ sudo nmcli con mod "System ens192" -ipv4.dns 1.1.1.1
+Либо изменить сетевые настройки (ip, gate, dns) одно командой
+
+$ sudo nmcli con mod "System ens192" ipv4.addresses 192.168.1.89/24 ipv4.gateway 192.168.1.1 ipv4.dns 8.8.8.8,8.8.4.4
+Задать dns-search
+
+$ sudo nmcli con mod "System ens192" ipv4.dns-search "domain1.local,domain2.local,domain3.local"
+Изменить имя интерфейса «Wired connection 1» на «ens224» (DEVICE=ens224)
+
+$ sudo nmcli con mod "Wired connection 1" connection.interface-name "ens224"
+Изменить id интерфейса «System ens192» на «ens192» (NAME=ens192)
+
+$ sudo nmcli con mod "System ens192" connection.id ens192
+Добавить интерфейс
+
+$ sudo nmcli con add con-name "static-ens224" ifname ens224 type ethernet ip4 192.168.1.76/24 gw4 192.168.1.1
+Запустить добавленный интерфейс
+
+$ sudo nmcli con up "static-ens224" iface ens224
+Удалить добавленный интерфейс
+
+$ sudo nmcli con del "static-ens224"
+Изменить DHCP на StaticIP
+
+$ sudo nmcli con mod "System ens192" ipv4.method manual
+Изменить StaticIP на DHCP
+
+$ sudo nmcli con mod "System ens192" ipv4.method auto
+Включить автоподключение к сети (ONBOOT=yes)
+
+$ sudo nmcli con mod "System ens192" connection.autoconnect yes
+Игнорировать информацию DNS-сервера с DHCP-сервера (PEERDNS=no)
+
+$ sudo nmcli con mod "System ens192" ipv4.ignore-auto-dns true
+Не использовать предоставленный шлюз в качестве шлюза по умолчанию (DEFROUTE=yes)
+
+$ sudo nmcli con mod "System ens192" ipv4.never-default no
+Узнать интерфейс
+
+$ nmcli -f NAME -m multiline con show
+$ nmcli -f NAME -m multiline con show | awk '{ print $2; }'
+Маршрутизация
+Добавить статический роутинг
+
+$ sudo nmcli con mod "System ens192" +ipv4.routes "10.0.0.0/8 10.33.22.11"
+Удалить статический роутинг
+
+$ sudo nmcli con mod "System ens192" -ipv4.routes "10.0.0.0/8 10.33.22.1"
+После добавления маршрутов необходимо перезапустить службу NetworkManager
+
+$ sudo systemctl restart NetworkManager
+ nmcli c add type ethernet ifname enp0s8 ipv4.address 10.0.0.1/24 ipv4.method manual
+echo 1 | sudo tee /proc/sys/net/ipv4/ip_forward
+###kvm-install-31.12.22;;  
+sudo virsh pool-define-as storage dir — - — -;; sudo virsh pool-list --all;;Pool storage built
+;sudo virsh pool-start storage;sudo virsh pool-autostart storage;sudo virsh pool-list ;
+##rabota-s-textom;;
+cat file_originale | [operation: sed, grep, awk, grep и т.п.] > result.txt - общий синтаксис выполнения действий по обработке содержимого файла и вывода результата в новый
+cat file_originale | [operazione: sed, grep, awk, grepи т.п.] >> result.txt — общий синтаксис выполнения действий по обработке содержимого файла и вывода результата в существующий файл. Если файл не существует, он будет создан
+grep Aug /var/log/messages — из файла '/var/log/messages' отобрать и вывести на стандартное устройство вывода строки, содержащие «Aug»
+grep ^Aug /var/log/messages — из файла '/var/log/messages' отобрать и вывести на стандартное устройство вывода строки, начинающиеся на «Aug»
+grep [0-9] /var/log/messages — из файла '/var/log/messages' отобрать и вывести на стандартное устройство вывода строки, содержащие цифры
+grep Aug -R /var/log/* — отобрать и вывести на стандартное устройство вывода строки, содержащие «Augr», во всех файлах, находящихся в директории /var/log и ниже
+sed 's/stringa1/stringa2/g' example.txt — в файле example.txt заменить «string1» на «string2», результат вывести на стандартное устройство вывода.
+sed '/^$/d' example.txt - удалить пустые строки из файла example.txt
+sed '/ *#/d; /^$/d' example.txt - удалить пустые строки и комментарии из файла example.txt
+echo 'esempio' | tr '[:lower:]' '[:upper:]' — преобразовать символы из нижнего регистра в верхний
+sed -e '1d' result.txt — удалить первую строку из файла example.txt
+sed -n '/string1/p' — отобразить только строки содержашие «string1»
+sed -e 's/ *$//' example.txt - удалить пустые символы в в конце каждой строки
+sed -e 's/string1//g' example.txt - удалить строку «string1» из текста не изменяя всего остального
+sed -n '1,8p;5q' example.txt - взять из файла с первой по восьмую строки и из них вывести первые пять
+sed -n '5p;5q' example.txt — вывести пятую строку
+sed -e 's/0*/0/g' example.txt - заменить последовательность из любого количества нулей одним нулём
+cat -n file1 — пронумеровать строки при выводе содержимого файла
+cat example.txt | awk 'NR%2==1' — при выводе содержимого файла, не выводить чётные строки файла
+echo a b c | awk '{print $1}' - вывести первую колонку. Разделение, по-умолчанию, по проблелу/пробелам или символу/символам табуляции
+echo a b c | awk '{print $1,$3}' - вывести первую и треью колонки. Разделение, по-умолчанию, по проблелу/пробелам или символу/символам табуляции
+paste file1 file2 - объединить содержимое file1 и file2 в виде таблицы: строка 1 из file1 = строка 1 колонка 1-n, строка 1 из file2 = строка 1 колонка n+1-m
+paste -d '+' file1 file2 - объединить содержимое file1 и file2 в виде таблицы с разделителем «+»
+sort file1 file2 — отсортировать содержимое двух файлов
+sort file1 file2 | uniq - отсортировать содержимое двух файлов, не отображая повторов
+sort file1 file2 | uniq -u — отсортировать содержимое двух файлов, отображая только уникальные строки (строки, встречающиеся в обоих файлах, не выводятся на стандартное устройство вывода)
+sort file1 file2 | uniq -d - отсортировать содержимое двух файлов, отображая только повторяющиеся строки
+comm -1 file1 file2 — сравнить содержимое двух файлов, не отображая строки принадлежащие файлу 'file1'
+comm -2 file1 file2 — сравнить содержимое двух файлов, не отображая строки принадлежащие файлу 'file2'
+comm -3 file1 file2 - сравнить содержимое двух файлов, удаляя строки встречающиеся в обоих файлах
+##preobrazovanie-formatov;;
+Преобразование наборов символов и файловых форматов
+
+dos2unix filedos.txt fileunix.txt — конвертировать файл текстового формата из MSDOS в UNIX (разница в символах возврата коретки)
+unix2dos fileunix.txt filedos.txt — конвертировать файл текстового формата из UNIX в MSDOS (разница в символах возврата коретки)
+recode ..HTML < page.txt > page.html — конвертировать содержимое тестового файла page.txt в html-файл page.html
+recode -l | more — вывести список доступных форматов
+
+##analiz-file-sistem;;
+Анализ файловых систем
+
+badblocks -v /dev/hda1 — проверить раздел hda1 на наличие bad-блоков
+fsck /dev/hda1 — проверить/восстановить целостность linux-файловой системы раздела hda1
+fsck.ext2 /dev/hda1 или e2fsck /dev/hda1 — проверить/восстановить целостность файловой системы ext2 раздела hda1
+e2fsck -j /dev/hda1 — проверить/восстановить целостность файловой системы ext3 раздела hda1 с указанием, что журнал расположен там же
+fsck.ext3 /dev/hda1 — проверить/восстановить целостность файловой системы ext3 раздела hda1
+fsck.vfat /dev/hda1 или fsck.msdos /dev/hda1 или dosfsck /dev/hda1 — проверить/восстановить целостность файловой системы fat раздела hda11
+
+##formatirov-file-sistem;;
+Форматирование файловых систем
+mkfs /dev/hda1 — создать linux-файловую систему на разделе hda1
+mke2fs /dev/hda1 — создать файловую систему ext2 на разделе hda1
+mke2fs -j /dev/hda1 — создать журналирующую файловую систему ext3 на разделе hda1
+mkfs -t vfat 32 -F /dev/hda1 — создать файловую систему FAT32 на разделе hda1
+fdformat -n /dev/fd0 - форматирование флоппи-диска без проверки
+mkswap /dev/hda3 — создание swap-пространства на разделе hda3
+swap-пространство
+mkswap /dev/hda3 - создание swap-пространства на разделе hda3
+swapon /dev/hda3 — активировать swap-пространство, расположенное на разделе hda3
+swapon /dev/hda2 /dev/hdb3 — активировать swap-пространства, расположенные на разделах hda2 и hdb3
+##backup;;
+( cd /tmp/local/ && tar c . ) | ssh -C user@ip_addr 'cd /home/share/ && tar x -p' — копирование содержимого /tmp/local на удалённый компьютер через ssh-туннель в /home/share/
+##seti;;
+Сеть
+ifconfig eth0 promisc — перевести интерфейс eth0 в promiscuous-режим для «отлова» пакетов (sniffing)
+ifconfig eth0 -promisc — отключить promiscuous-режим на интерфейсе eth0
+dhclient eth0 — активировать интерфейс eth0 в dhcp-режиме.
+route -n
+netstat -rn — вывести локальную таблицу маршрутизации
+route add -net 0/0 gw IP_Gateway — задать ip-адрес шлюза по умолчанию (default gateway)
+route add -net 192.168.0.0 netmask 255.255.0.0 gw 192.168.1.1 — добавить статический маршрут в сеть 192.168.0.0/16 через шлюз с ip-адресом 192.168.1.1
+route del 0/0 gw IP_gateway — удалить ip-адрес шлюза по умолчанию (default gateway)
+echo "1" > /proc/sys/net/ipv4/ip_forward — разрешить пересылку пакетов (forwarding)
+hostname — отобразить имя компьютера
+host http://www.linuxguide.it или host 62.149.140.85 — разрешить имя http://www.linuxguide.it хоста в ip-адрес и наоборот
+ip link show - отобразить состояние всех интерфейсов
+mii-tool eth0 - отобразить статус и тип соединения для интерфейса eth0
+ethtool eth0 - отображает статистику интерфеса eth0 с выводом такой информации, как поддерживаемые и текущие режимы соединения
+netstat -tupn - отображает все установленные сетевые соединения по протоколам TCP и UDP без разрешения имён в ip-адреса и PID'ы и имена процессов, обеспечивающих эти соединения
+netstat -tupln — отображает все сетевые соединения по протоколам TCP и UDP без разрешения имён в ip-адреса и PID'ы и имена процессов, слушающих порты
+tcpdump tcp port 80 — отобразить весь трафик на TCP-порт 80 (обычно — HTTP)
+iwlist scan — просканировать эфир на предмет, доступности беспроводных точек доступа
+iwconfig eth1 — показать конфигурацию беспроводного сетевого интерфейса eth1
+##samba;;
+Microsoft Windows networks(SAMBA)
+nbtscan ip_addr
+nmblookup -A ip_addr - разрешить netbios-имя nbtscan не во всех системах ставится по-умолчанию, возможно, придётся доустанавливать вручную. nmblookup включен в пакет samba.
+smbclient -L ip_addr/hostname — отобразить ресурсы, предоставленные в общий доступ на windows-машине
+smbget -Rr smb://ip_addr/share — подобно wget может получить файлы с windows-машин через smb-протокол
+mount -t smbfs -o username=user,password=pass //winclient/share /mnt/share — смонтировать smb-ресурс, предоставленный на windows-машине, в локальную файловую систему
+
+##iptables;;
+IPTABLES (firewall)
+iptables -t filter -nL
+iptables -nL — отобразить все цепочки правил
+iptables -t nat -L — отобразить все цепочки правил в NAT-таблице
+iptables -t filter -F или iptables -F — очистить все цепочки правил в filter-таблице
+iptables -t nat -F — очистить все цепочки правил в NAT-таблице
+iptables -t filter -X — удалить все пользовательские цепочки правил в filter-таблице
+iptables -t filter -A INPUT -p tcp --dport telnet -j ACCEPT — позволить входящее подключение telnet'ом
+iptables -t filter -A OUTPUT -p tcp --dport http -j DROP — блокировать исходящие HTTP-соединения
+iptables -t filter -A FORWARD -p tcp --dport pop3 -j ACCEPT — позволить «прокидывать» (forward) POP3-соединения
+iptables -t filter -A INPUT -j LOG --log-prefix "DROP INPUT" — включить журналирование ядром пакетов, проходящих через цепочку INPUT, и добавлением к сообщению префикса «DROP INPUT»
+iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE — включить NAT (Network Address Translate) исходящих пакетов на интерфейс eth0. Допустимо при использовании с динамически выделяемыми ip-адресами.
+iptables -t nat -A PREROUTING -d 192.168.0.1 -p tcp -m tcp --dport 22 -j DNAT --to-destination 10.0.0.2:22 — перенаправление пакетов, адресованных одному хосту, на другой хост
+sudo iptables -L
+# iptables -L -t nat
+После чего включим NAT и настроим маршрутизацию:
+sudo iptables -t nat -A POSTROUTING -s 192.168.0.2 -j MASQUERADE
+sudo iptables -A FORWARD -i eth0 -m state --state NEW,RELATED,ESTABLISHED -j ACCEPT
+sudo iptables -A FORWARD -i eth1 -m state --state RELATED,ESTABLISHED -j ACCEPT
+где 192.168.0.2 — клиентский ip, вместо него может стоять и диапазон адресов 192.168.0./24
+eth0 — локальная сеть
+eth1 — интернет
+Следующим шагом сохраняем правила:
+sudo iptables-save
+и проверив все ли правильно записано сохраняем правила в файл:
+sudo sh -c "iptables-save > /etc/iptables.up.rules"
+Для того, чтобы правила запускались при загрузке системы создаем скрипт в папке /etc/network/if-up.d
+со следующим содержимым:
+;;#!/bin/sh
+iptables-restore < /etc/iptables.up.rules
+Так же необходимо добавить или раскомментировать строчку (если закомментирована) в файле /etc/sysctl.conf со следующим содержанием:
+net.ipv4.ip_forward = 1
+Все должно заработать, по крайней мере у меня все прекрасно работает.
+Если возникнет необходимость очистить iptables, необходимо в консоли выполнить следующее:
+sudo iptables -F
+sudo iptables -t nat -F
+##monitoring-i-otladka;;
+Мониторинг и отладка
+ps -eafw — отобразить запущенные процессы, используемые ими ресурсы и другую полезную информацию (единожды)
+ps -e -o pid,args --forest — вывести PID'ы и процессы в виде дерева
+pstree — отобразить дерево процессов
+kill -9 98989 или kill -KILL 98989 — «убить» процесс с PID 98989 «на смерть» (без соблюдения целостности данных)
+kill -TERM 98989 — корректно завершить процесс с PID 98989
+kill -1 98989 или kill -HUP 98989 - заставить процесс с PID 98989 перепрочитать файл конфигурации
+lsof -p 98989 - отобразить список файлов, открытых процессом с PID 98989
+lsof /home/user1 — отобразить список открытых файлов из директории /home/user1
+strace -c ls >/dev/null - вывести список системных вызовов, созданных и полученных процессом ls
+strace -f -e open ls >/dev/null — вывести вызовы бибилотек
+watch -n1 'cat /proc/interrupts' - отображать прерывания в режиме реального времени
+last reboot — отобразить историю перезагрузок системы
+last user1 — отобразить историю регистрации пользователя user1 в системе и время его нахождения в ней
+lsmod — вывести загруженные модули ядра
+free -m - показать состояние оперативной памяти в мегабайтах
+smartctl -A /dev/hda - контроль состояния жёсткого диска /dev/hda через SMART
+smartctl -i /dev/hda — проверить доступность SMART на жёстком диске /dev/hda
+tail /var/log/dmesg - вывести десять последних записей из журнала загрузки ядра
+tail /var/log/messages - вывести десять последних записей из системного журнала
+
+##gns3-virtualbox-kvm-vdi-qcow2;;qemu-img convert -f vdi -O qcow2 deb1.vdi deb1.qcow2;;
+
+mrxpalmeiras - Linux Cheat Sheet
+BASH Internals
+syntax, use 'echo' + keyword
+
+$$ - PID of current shell
+$0 - show shell name
+$! - PID of last background cmd
+$? - exist status of last cmd
+$_ - previously created dir (mkdir foo && cd $_)
+$@ - show all command's parameters
+$# - show # of arguments passed to command
+$* - All arguments passed to command
+$1 - first argument passed to command
+!! - run previous command
+-eq - math equal (int)
+-ne - math not equal (int)
+-lt - math less than
+-le - math less than or equal
+-gt - math greater than
+-ge - math greater than or equal
+-z - string is 0 length (null)
+-n - string is not 0 length (not null)
+-nt - newer than (file or object time)
+(-r,-w,-x) - if object is readable,writable,exec
+set default value if parameter is null or empty
+
+var1=""
+echo "${var1:-abc}"
+>> abc
+error out if parameter is null or empty
+
+var1=""
+echo "${var1:?}"
+>> bash: var1: parameter null or not set
+check if character is inside a string
+
+str="1,2,3,4-5"
+[[ "$str" == *-* ]] && echo "has dash"
+Arrays & Dictionaries
+Simple Array
+
+Fruits=('Apple' 'Banana' 'Cherry')
+echo ${Fruits[1]} ## Banana
+echo ${Fruits[@]:1:2} ## range from 2nd to 3rd element, banana cherry
+add an element to array
+
+Fruits+=('Watermelon')
+echo ${Fruits[@]} ## "apple, banana, cherry, watermelon", @ = show all elements in array
+Loop over an array
+
+arr=(apples oranges tomatoes)
+# Just elements.
+for element in "${arr[@]}"; do
+printf '%s\n' "$element"
+done
+create array from string with delimeter
+
+str="1,2,3,4,5"
+IFS="," read -a ARR <<< $str
+echo "${ARR[@]}"
+>>> 1 2 3 4 5
+
+Key/Value pairs (associative Array, aka Hash, Dictionary)
+
+read in config file, check array of key/val pairs to make sure parameters are set
+
+$config = "/etc/file.conf"
+declare -A myList=( [first]=
+[last]=
+[age]=
+)
+for param in "${!myList[@]}"; do
+value=$(grep ^$param $config)
+var[$param]=$value
+if [ -z ${myList[$param]} ];
+then
+echo "param $param is not set"; exit 1
+fi
+done
+Dictionary/Hash in bash (parse IP + Port hash, netcat to each IP and port)
+
+readonly connections=(
+'A, 205.209.202.37, 7755'
+'B, 205.209.202.1, 8899'
+'C, 205.209.202.21, 4578'
+)
+function nctest(){
+local name ip port
+for fields in ${connections[@]}
+do
+# strip whitespace
+fields="$(echo -e "${fields}" | tr -d '[:space:]')"
+IFS=$',' read -r typ name ip port <<< $fields
+conn=$(nc -zv -w 2 $ip $port 2>&1 | grep 'Connection refused' )
+if [[ -z "${conn}" ]]
+then
+echo "[$name] nc $ip $port OK"
+else
+echo "[$name] nc $ip $port REFUSED"
+fi
+echo "--------------"
+done
+}
+nctest
+basic dict
+
+declare -A sounds
+sounds[dog]="bark"
+sounds[cow]="moo"
+sounds[cat]="meow"
+echo ${sounds[dog]} # bark
+Iterate keys and values
+
+for val in "${sounds[@]}"; do
+echo $val
+done
+for key in "${!sounds[@]}"; do
+echo $key
+done
+Math
+calculate value
+
+echo $((35+15))
+50
+generate random number 0 to 500
+
+$((RANDOM % 500))
+use calculator
+
+echo "12+3" | bc # 15
+echo "10^2" | bc # 100
+echo "10/2" | bc # 5
+Loops and Conditionals
+
+for loop with Range
+
+for loop in {1..50}; do echo "processing $loop"; sleep 2; done
+> processing 1
+> processing 2
+etc
+Range with step size, count every 5
+
+for i in {1..50..5}
+or use a 'seq' operand
+
+for i in $(seq 1 5); do echo $i; done
+1
+2
+3..etc
+sequence with step size,
+
+for i in $(seq 1 5 30); do echo $i; done
+1
+6
+11
+16
+21
+26
+Counter loop
+
+for ((i=0; i<100; i++)); do echo $i; done
+loop thru directories and grep something from config files
+
+for i in $(ls); do grep 'something' $i/*.conf ; done
+Case statement (check input params)
+
+case $key in
+-u| -username | --username)
+UNAME="$2"
+shift
+;;
+-pw| -password | --password)
+PASSWORD="$2"
+shift
+;;
+-p| -profile | --profile)
+PROFILE="$2"
+shift
+;;
+*)
+echo "Unknown Option"
+exit 1
+case $env in
+"test")
+username="testuser"; password="testPW";;
+"prod")
+username="produser"; password="prodPW";;
+esac
+If statement
+
+if [[ -z "$string" ]];
+then
+echo "String is empty"
+elif [[ -n "$string" ]]; then
+echo "String is not empty"
+fi
+Variable Conditionals
+
+[[ -z STRING ]] Empty string
+[[ -n STRING ]] Not empty string
+[[ STRING == STRING ]] Equal
+[[ STRING != STRING ]] Not Equal
+[[ NUM -eq NUM ]] Equal
+[[ NUM -ne NUM ]] Not equal
+[[ NUM -lt NUM ]] Less than
+[[ NUM -le NUM ]] Less than or equal
+[[ NUM -gt NUM ]] Greater than
+[[ NUM -ge NUM ]] Greater than or equal
+[[ STRING =~ STRING ]] Regexp
+(( NUM < NUM )) Numeric conditions
+[[ -o noclobber ]] If OPTIONNAME is enabled
+[[ ! EXPR ]] Not
+[[ X ]] && [[ Y ]] And
+[[ X ]] || [[ Y ]]
+File conditionals
+
+[[ -e FILE ]] Exists
+[[ -r FILE ]] Readable
+[[ -h FILE ]] Symlink
+[[ -d FILE ]] Directory
+[[ -w FILE ]] Writable
+[[ -s FILE ]] Size is > 0 bytes
+[[ -f FILE ]] File is type "file"
+[[ -x FILE ]] Executable
+[[ FILE1 -nt FILE2 ]] 1 is more recent than 2
+[[ FILE1 -ot FILE2 ]] 2 is more recent than 1
+[[ FILE1 -ef FILE2 ]] Same files
+Case / Switch
+
+case "$1" in
+start | begin)
+service start
+;;
+stop | kill)
+service stop
+;;
+*)
+echo "usage: $0 {start|stop}
+;;
+esac
+Debugging & Test
+enable line by line processing output in script
+
+set -x
+verbose output only if debug flag is set
+
+debug=1
+test $debug -gt 0 && echo "var is $var"
+test if file exists, if not, exit with error
+
+test -f "${config}" || { echo "${config} not present, exiting.."; exit 1; }
+check if parameters are set and not empty, exits out w error if not set
+
+err_msg="[ERROR] parameter is not set or empty value:"
+myParam=${1:?"$err_msg You have an error, missing myParam"}
+Shell Cmds
+run python inside Bash with arguments
+
+function print_hello {
+NAME="${1}" python - <<END
+import os
+print("Hello there %s" % os.environ['NAME'])
+END
+}
+print_hello Joe
+get variable from a json dump using python
+
+URL=$(echo ${URL} | python -c 'import sys,json; print json.load(sys.stdin)["url"]')
+colorize Bash prompt (insert into ~/.bashrc)
+
+export PS1="[\[\e[31m\]\u\[\e[m\]\[\e[33m\]@\h\[\e[m\]:\W]$ "
+Root PS1
+
+export PS1="[\[\e[30;41m\]\u\[\e[m\]\[\e[33m\]@\h\[\e[m\]:\W]$ "
+generate a random password
+
+date +%s | sha256sum | base64 | head -c 8; echo
+remove all empty directories
+
+find . -type d -empty -delete
+copy permissions on file1 to file2
+
+chmod --reference file2 file1
+remove all but specific file
+
+rm -f !(theFile.txt)
+remove files that dont match a specific extension
+
+rm !(*.xls|*.slsx|*.csv)
+find duplicate files (check file hash)
+
+find -not -empty -type f -printf "%s
+" | sort -rn | uniq -d | xargs -I{} -n1 find -type f -size {}c -print0 | xargs -0 md5sum | sort | uniq -w32 --all-repeated=separate
+Regex & String Manipulation
+convert uppercase files to lowercase
+
+rename 'y/A-Z/a-z/' *
+capitalize 1st letter
+
+var="wunderbar"
+echo ${var^}
+capitalize entire word
+
+echo ${var^^}
+get # of characters in variable
+
+var="milkshake"
+echo ${#var}
+9
+Check if Word is in a String
+
+[[ "$string" == *"$word"* ]] || echo "word not in string"
+strip off the last character from a string,
+
+var="Banana"
+echo ${var%?} // Banana
+Get value between 2 delimiters,
+
+grep ExecStart bitbucket.service | awk -v FS="(bitbucket/|/bin)" '{print $2}')
+extract filename from a path
+
+echo /somedir/blah/postgresql96-9.6.5.x86_64.rpm | awk '{match($1, "[^/]*$", a)}END{print a[0]}'
+
+postgresql96-9.6.5.x86_64.rpm
+search for a pattern in all files
+
+grep -RnisI "My cat*" /var/log/*
+Insert string after a delimeter, save in place (insert "dog" after "cat")
+
+tmpfile=$(mktemp)
+awk '/cat/ { print; print "dog"; next}1' pets.txt > $tmpfile && mv -f $tmpfile pets.txt
+String manipulation
+
+STR="HELLO WORLD!"
+echo ${STR,} #=> "hELLO WORLD!" (lowercase 1st letter)
+echo ${STR,,} #=> "hello world!" (all lowercase) STR="hello world!"
+echo ${STR^} #=> "Hello world!" (uppercase 1st letter)
+echo ${STR^^} #=> "HELLO WORLD!" (all uppercase)
+# Substitution
+VAR="beachball"
+${VAR%suffix} # Remove suffix
+${VAR#prefix} # Remove prefix
+${VAR%%suffix} # Remove long suffix
+${VAR##prefix} # Remove long prefix
+${VAR/beach/basket} # Replace first match >> basketball
+## Length of string
+echo ${#VAR} # 9
+grep for multiple strings
+
+ls -la /home | grep -v "joe\|fred\|bob"
+another way,
+
+cat /etc/passwd | egrep -v '^(root|halt|sync|shutdown|adm|bin|daemon)'
+get last character of a string
+
+permissions="775"
+echo "{permissions: -1}"
+get 2nd and 3rd character from a string
+
+str="boris"
+second=$(echo $str | head -c 2 | tail -c 1)
+third=$(echo $str | head -c 3 | tail -c 1)
+check if word is in a string
+
+str="sun is shining"
+[ -z "${str##*'shining'*}" ] && echo "contains word!!!"
+break down string using delimeter
+
+str="deny=5"
+key=${str%%'='*} # key is 'deny'
+val=${str##*'='} # val is 5
+
+Cut command
+breakdown string by fields
+
+string="/mnt/hc/home/user"
+echo $string | cut -d'/' -f2 ## mnt
+echo $string | cut -d'/' -f2,3,4 ## mnt hc home
+
+# from 2nd field to end of string
+echo $string | cut -d'/' -f2- ## mnt/hc/home/user
+JSON & YAML
+
+JQ - json parser
+show all values in PP format
+
+jq . file.json
+PP api output
+
+curl example.org/api/v1/users | jq .
+show specific key
+
+json={\"name\":\"bob\", \"age\":23}
+echo $json | jq '.name'
+parse array key for specific value
+
+echo $json | jq '.values[].title'
+
+select multiple properties of 1st element
+
+jq '.[0] | { _id, email }' file.json
+delete key
+
+cat file.json
+{ "name": "joe", "age": 23, "user-name": "j123" }
+
+delete Name key
+jq 'del(.name)' file.json > file2.json
+
+delete key with dashes
+jq 'del(."user-name")' file.json > file2.json
+Convert YAML to JSON - 1 liner
+
+python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=4)' < file.yaml > file.json
+Functions
+
+basic function
+
+myFunc() {
+echo "hello $1"
+}
+
+myFunc "bob"
+Kill
+kill -1 PID # SIGHUP, shutdown proc + restart
+kill -2 PID # TERM, same as control+c
+kill -3 PID # CORE, stop proc, create a core dump
+kill -9 PID # SIGKILL, kill unresponsive proc, dirty kill
+kill -11 PID # SIGSEGV, create core dump on segmentation fault, useful for misbehaving procs
+kill -15 PID # TERM, default kill flag, same as "kill PID"
+Various
+add commands alias
+
+alias ls='ls -lta --color=auto
+Run a specific cmd from history
+
+history
+120 cat /var/log/messages
+121 vi /etc/hosts
+!120
+## will show /var/log/messages
+
+redirect std output to both file and screen
+
+program [arguments...] 2>&1 | tee outfile
+Get Date in specific format
+
+echo $(date +%Y%m%d_%H%M%S)
+Parameter Expansion
+
+name="John"
+echo ${name}
+echo ${name/J/j} #=> "john" (substitution)
+echo ${name:0:2} #=> "Jo" (slicing)
+echo ${name::2} #=> "Jo" (slicing)
+echo ${name::-1} #=> "Joh" (slicing)
+echo ${name:(-1)} #=> "n" (slicing from right)
+echo ${name:(-2):1} #=> "h" (slicing from right)
+echo ${food:-Cake} #=> $food or "Cake"
+length=2
+echo ${name:0:length} ## Jo
+STR="/path/to/file.cpp"
+echo ${STR%.cpp} ## /path/to/file
+echo ${STR%.cpp}.o # /path/to/file.o
+echo ${STR##*.} # cpp (extension)
+echo ${STR##*/} # foo.cpp (basepath)
+echo ${STR#*/} # path/to/foo.cpp
+echo ${STR##*/} # foo.cpp
+echo ${STR/foo/bar} # /path/to/bar.cpp
+## set default values
+${FOO:-val} ## $FOO, or val if not set
+example: port=${1:-22} # if port not set via argument, make it 22
+${FOO:=val} ## Set $FOO to val if not set
+${FOO:+val} ## val if $FOO is set
+${FOO:?message} ## Show error message and exit if $FOO is not set
+File operations
+
+create 25 new files from one command, use: {1..X}
+
+touch myfile{1..25}
+get file extension
+
+file=superman.jpg
+name=${file%.*} # superman
+ext=${file#.*} # jpg
+delete all files that dont match an extension
+
+rm !(*.foo|*.bar|*.baz)
+delete files from search
+
+find . -name '*.pyc' -delete
+grep 5 lines above and below a certain value
+
+cat employees.txt | grep -A 5 -B 5 'Mr. Jones'
+remove all blank lines from a file
+
+grep . file1 > file2
+read in a file
+
+< file.txt | while read line; do
+echo $line
+done
+generate 1GB empty file
+
+dd if=/dev/zero of=testfile count=1024000 bs=1024
+or
+
+fallocate -l 1GB testfile
+create a random large 200MB file,
+
+dd if=/dev/urandom of=file.txt bs=2075200 count=100
+generate 10mb file with random text
+
+base64 /dev/urandom | head -c 10000000 > testfile
+VIM
+
+delete all lines from file
+
+:1,$d
+search for all instances of string 'horse'
+
+escape key
+/horse
+press 'n' to move to next occurence
+vi a file on remote server
+
+vi scp://user@<hostname>//etc/hosts
+SSH
+file permissions
+
+/home/user = 700
+/home/user/.ssh = 700
+/home/user/.ssh/id_rsa = 600
+/home/user/.ssh/id_rsa.pub = 644
+/home/user/.ssh/authorized_keys = 600
+/home/user/.ssh/known_hosts = 644
+troubleshoot auth errors
+
+on target (where youre trying to ssh into), start SSH on different port, debug mode
+
+/usr/sbin/sshd -d -p 2222
+on client, connect to target
+
+ssh user@target -p 2222 -vvv
+SSH Shuttle
+
+pip3 install sshuttle
+route all connections to 172.31.23.156 via "server B"
+
+sshuttle -r user@<server B IP> 172.31.23.156
+all connections will now be going via remote IP, encrypted
+
+to route ALL connections, use 0/0
+
+sshuttle -r user@serverB 0/0
+proxy connections for a specific website,via jump host serverB, send to background
+
+serverA> nohup sshuttle -r serverB `dig +short www.somesite.com | sed "/[^0-9\.]/d" | xargs -n1 -I '$' echo -n '$/32 '` 2>&1 &
+pass a custom SSH key to sshuttle
+
+sshuttle --dns user@host <IP range> --ssh-cmd 'ssh -i /home/user/priv_key'
+use SSH as a web proxy
+
+ssh -D 8080 username@proxyHost
+set browsers proxy option to 127.0.0.1:8080, all browsing requests will go via proxyHost
+
+TMUX
+
+start tmux session
+
+tmux
+reattach to session after broken connection
+
+tmux ls
+0: 1 windows (created Tue Aug 23 12:39:52 2011) [103x30]
+tmux attach -t 0
+delete session
+
+tmux kill-session -t 0
+check what pub key matches the priv key
+
+ssh-keygen -y -e -f ~/.ssh/id_rsa
+add a new SSH key and copy the public key to remote known_hosts file
+
+ssh-keygen -t rsa
+cat ~/.ssh/id_rsa.pub | ssh user@hostname 'cat >> .ssh/authorized_keys'
+run a command on remote host
+
+ssh servername cmdname
+connect to an unreachable server B (port 2345) via SSH hop over reachable server A
+
+ssh user@serverA -L 6789:serverB:2345 -f -N (localhost:6789 = serverB:2345)
+Port Tunneling via SSH
+
+(port 1200 is unreachable from server A, connect to it via localhost:1300 via SSH to server B
+
+user@serverA> ssh -L 1300:localhost:1200 serverB -fN
+setup SSH Sockets
+
+mkdir ~/.ssh/sockets
+vim ~/.ssh/config
+UseRoaming no
+TCPKeepAlive yes
+ServerAliveInterval 15
+ServerAliveCountMax 6
+Host *
+Compression yes
+ControlMaster auto
+ControlPath ~/.ssh/sockets/%r@%h:%p
+ControlPersist yes
+ControlPersist 600
+Host nycweb1
+Hostname 192.168.10.2
+User root
+IdentityFile ~/.ssh/id_rsa
+show fingerprint of a public key file, useful to track down /var/log/secure messages to see who logged in
+
+ssh-keygen -lf /home/user/.ssh/authorized_keys | grep <fingerprint> (looks like SHA256:zZUd2W)
+Memory / Diagnostics
+Debian - CPU and Mem
+
+lshw -html > /tmp/specs.html
+Show Hardware information
+
+inxi -Fxzd
+Fedora - CPU and Mem
+
+cat /proc/cpuinfo
+cat /proc/meminfo
+lspci -v
+Show memory usage
+
+free -m
+Show processes by memory usage
+
+ps aux | awk '{print $6/1024 " MB\t\t" $11}' | sort -n
+Monitor I/O usage
+
+vmstat 1 20 // runs vmstat every 1 sec, 20 times
+show actual Memory information (RSS, memory address ,etc )
+
+pmap -p <PID>
+show USB info
+
+lsusb -v
+show size of folder
+
+du -sh
+Swap
+clear swap space
+
+swapoff -a (wait till clears)
+swapon -a
+SMEM (Memory usage profiler)
+check which user/proc is using swap by %
+
+yum install smem
+smem -t -p
+show memory usage just for my user
+
+smem -u
+show memory usage by user
+
+smem -u joe
+show memory usage by proc
+
+smem -p firefox
+show memory by RSS, PSS, order by Columns
+
+(RSS, resident set size=portion of memory in RAM, rest in swap)
+
+(PSS, proportional set size=portion of main memory, RAM, occupied by proc)
+
+smem -c "name user pss rss"
+DSTAT
+
+show Out of Memory oom procs that are high on list to be killed
+
+dstat --top-oom (yum install dstat)
+check process OOM score
+
+cat /proc/PID/oom_adj (-10 is lower priority to get killed than 10)
+Journalctl
+tail a log for a process
+
+journalctl -u httpd -f
+show last 100 lines for a process
+
+journalctl -u httpd --no-pager -n100
+tail a process log
+
+journalctl -f -u <process-name>
+clear journal log space anything older than 5 days
+
+journalctl --vacuum-time=5d
+keep only last 500mb
+
+journalctl --vacuum-size=500M
+DMIDecode
+show bios
+
+dmidecode -t bios
+system info
+
+dmidecode -t system
+chassis
+
+dmidecode -t chassis
+memory, processor, slot
+
+dmidecode -t memory
+dmidecode -t processor
+dmidecode -t slot
+serial #
+
+dmidecode -s system-serial-number
+Show all current users logged in
+who
+w
+Send msg to all logged-in users
+
+wall -n "hello"
+Show all loaded modules
+
+lsmod
+insert, remove mod
+
+insmod fat
+rmmod fat
+Show current runlevel
+
+runlevel
+Show all device and hardware information log
+
+dmesg
+show IRQ drivers being used
+
+cat /proc/interrupts
+show DMA channels being used (comms between I/O ports)
+
+cat /proc/dma
+show I/O ports being used
+
+cat /proc/ioports
+Stress Testing
+
+yum install stress-ng
+run stress on 2 CPUs
+
+stress-ng --cpu 2 --timeout 10s --metrics-brief
+force Out of memory kill
+
+stress-ng --vm 5 --vm-bytes 95% --vm-method all --verify -t 1m -v
+Stress I/O load, run 5 workers that will continually R/W to temp file
+
+stress-ng -d 5
+Run application with memory limit
+
+systemd-run --user -p MemoryLimit=3G google-chrome
+
+Kill frozen process
+
+Alt + PrintScreen + f
+Find procs using most SWAP space
+
+find /proc -maxdepth 2 -path "/proc/[0-9]*/status" -readable -exec awk -v FS=":" '{process[$1]=$2;sub(/^[ \t]+/,"",process[$1]);} END {if(process["VmSwap"] && process["VmSwap"] != "0 kB") printf "%10s %-30s %20s\n",process["Pid"],process["Name"],process["VmSwap"]}' '{}' \; | awk '{print $(NF-1),$0}' | sort -hr | head | cut -d " " -f2-
+
+Get top 25 Memory hogs
+
+ps -eo pid,user,ni,rss,vsz,cputime,lstart,etimes,time,%cpu,%mem,args --sort=-rss | head -n 25
+Network / Ifaces configuration
+IP command
+
+show all interfaces
+
+ip a
+show specific interface
+
+ip addr show dev em1
+assign address to interface
+
+ip addr add 192.168.5.2 dev em1
+show only active interfaces
+
+ip link ls up
+bring up an interface
+
+ip link set dev em1 up
+disable an interface
+
+ip link set dev em1 down
+rename inteface w/o network restart
+
+ip link set dev em1 down
+ip link set em1 name eth1
+
+ip link set eth1 up
+delete interface
+
+ip link delete em4
+bring up an interface
+
+ip link set em1 up
+change MTU on interface
+
+ip link set em1 mtu 9000
+see all routes
+
+ip route or route -n
+get route for an IP
+
+ip route get 192.168.1.2
+delete route
+
+ip route del 192.168.1.2
+add a new route via gateway
+
+ip route add 192.168.1.2 via 192.168.1.1 dev em1
+add default route
+
+ip route add default ia 192.168.1.1 dev em1
+show all tunnels
+
+ip tunnel
+NetworkManager
+show all devices
+
+nmcli device
+start a device
+
+nmcli device connect em1
+get UUID
+
+nmcli connections show
+generate UID
+
+uuidgen eth0
+add new connection
+
+nmcli con add connection.interface-name enp1s0 type ethernet
+delete interface
+
+nmcli dev disconnect eth1
+Network Diagnostics
+Trace # of hops for HTTP request
+
+traceroute 123.123.21.2
+check kernel actions during network service start
+
+dmesg
+Check if port 120 is open and listening
+
+netstat -an | grep 120
+check user, PID listening on port 8080
+
+ss -ap4 | grep 8080
+TCP Dump
+
+show all interfaces tcpdump can listen on
+
+tcpdump -D
+listen on specific interface
+
+tcpdump -i eth0
+listen on all ifaces
+
+tcpdump -i any
+listen on specific port or portrange
+
+tcpdump portrange 3334-3380
+tcpdump -i any port 12345
+search for specific src IP and port over an iface
+
+tcpdump port 1234 and src 1.1.1.1 -i em1
+record packet capture into a .cap file
+
+tcpdump -w capture.cap
+read contents of a .cap file
+
+tcpdump -r capture.cap
+display only IP address and ports instead of hostnames
+
+tcpdump -n
+display only where destination IP is 192.168.5.1 (for source use -n src)
+
+tcpdump -n dst host 192.168.5.1
+capture TCP packets where port is between 1 and 1023
+
+tcpdump -n tcp dst portrange 1-1023
+capture packets where destination host is 192.168.5.1 and port is 5049
+
+tcpdump -n "dst host 192.168.5.1 and dst port 5049"
+print packets in ASCII or HEX
+
+tcpdump -i any -A (ascii) or -X (hex)
+run in background and record to file
+
+nohup tcpdump -i any port 27025 -w myfile.cap &
+rotate pcap file similar to logrotate, this will create 10 pcap files of 200MB each
+
+tcpdump -n -W 10 -C 200 -w /tmp/file.pcap
+check multicast data
+
+tcpdump -i p1p2 -s0 -vvv host 233.143.214.1
+Flags
+
+[.] - ACK (Acknowledgment)
+[S] - SYN (Start Connection)
+[P] - PSH (Push Data)
+[F] - FIN (Finish Connection)
+[R] - RST (Reset Connection)
+[S.] - SYN-ACK (SynAcK Packet)
+
+Wireshark
+show only bad packets
+
+add to filter: tcp.analysis.flags
+
+show only Resets
+tcp.flags.reset == 1
+show packets between dates
+
+(frame.time >= "July 27, 2020 08:40:00" && frame.time <= "July 30, 2020 08:42:42")
+show only problematic packets
+_ws.expert.severity == error
+
+show only UDP / TCP/ RTCP
+type into filter: udp (or tcp, rtcp)
+Check MAC address mapping to IP
+
+arp
+clear ARP cache
+
+ip -s -s neigh flush all
+IP Routing Table
+
+route -n
+add a new route,
+
+ip route add 118.100.1.173 via 192.168.38.17 dev p1p2 metric 200
+add new route permanently
+
+vim /etc/sysconfig/network-scripts/route-p1p2
+201.224.250.40 via 192.168.38.33 metric 200
+delete a route
+
+ip route del 118.100.1.173
+modify existing route
+
+ip route del 40.2.2.0/24 via 30.1.2.2
+ip route add 40.2.2.0/24 via 30.1.2.2 metric 1234
+# kill all connections on port 21
+
+tcpkill -i eth0 port 21
+add TCP permissions to TCP analyzer tools so non-root users can create sockets and access network interfaces
+
+setcap cap_net_raw,cap_net_admin=eip /usr/bin/tcpreplay
+setcap cap_net_raw,cap_net_admin=eip /usr/bin/tcpdump
+IPERF
+
+check bandwidth usage
+
+yum install iperf
+on server:
+
+iperf -s
+on client:
+
+iperf -c <IP of server> -p 5001 <port> -P 20 <# of parallel TCP conns> -t 20 <run for x seconds>
+
+Client connecting to 208.224.251.3, TCP port 5001
+
+TCP window size: 90.0 KByte (default)
+
+------------------------------------------------------------
+
+[ 3] local 172.31.23.96 port 48908 connected with 208.224.251.3 port 5001
+
+write failed: Connection reset by peer
+
+[ ID] Interval Transfer Bandwidth
+
+[ 3] 0.0- 0.0 sec 130 KBytes 68.9 Mbits/sec
+
+check bandwidth usage on a host directly
+
+iftop -PN
+SAR
+
+show live statistics of traffic over all interfaces
+sar -n DEV 1 2
+DEV = network iface info
+EDEV = network errors
+NFS = active NFS clients
+NFSD = NFS server info
+SOCK = socket info
+ALL = all above
+
+Parameter Description:
+
+IFACE: LAN interface
+
+rxpck/s: packets received per second
+
+txpck/s: packets sent every second
+
+rxbyt/s: number of bytes received per second
+
+txbyt/s: number of bytes sent per second
+
+rxcmp/s: compressed packets received per second
+
+txcmp/s: compressed packets sent every second
+
+rxmcst/s: multicast packets received per second
+
+rxerr/s: bad packets received per second
+
+txerr/s: bad packets sent every second
+
+coll/s: conflicts per second
+
+rxdrop/s: the number of received packets dropped per second because the buffer is full
+
+txdrop/s: the number of sent packets dropped per second because the buffer is full
+
+txcarr/s: number of carrier errors per second when sending packets
+
+rxfram/s: the number of frame alignment errors received per second
+
+rxfifo/s: the number of FIFO over speed errors per second of received packets
+
+txfifo/s: the number of FIFO over speed errors per second in packets sent
+
+show statistics for all ifaces
+
+cat /proc/net/dev
+Check Traceroute and Ping at same time, live stream
+
+mtr www.google.com
+Check Port communication
+find process thats holding a certain port #
+
+netstat -tulpn | grep 5000
+Netcat
+
+Chat client
+
+On Server - start NC session
+
+hostA: nc -l 9933
+
+on Client, connect to NC session
+
+hostB: nc hostA 9933
+
+can type messages between servers like chat client
+
+netcat from specific interface
+
+nc hostname 22 -s 192.168.30.23 -v
+start a Netcat Bash session (ghetto SSH)
+
+serverA> nc -l 5000 -e /bin/bash
+serverB> nc serverA 5000
+Netcat Ghetto web server
+
+while true ; do nc -l -p 1500 -c 'echo -e "HTTP/1.1 200 OK\n\n $(date)"' ; done
+Scan a range of IPs for an open port,
+
+for i in {1..25};do nc -zv 208.224.251.$i 8003 -w 2 ;done
+Spin up a webserver with custom port, check that you can connect to port
+
+
+python2 serverA> python -m SimpleHTTPServer 8331
+python3 serverA> python3 -m http.server 8331
+serverB> nc serverA 8331
+connect on a UDP port
+
+nc -u <hostname> <port> -vv
+transfer files between 2 hosts
+
+hostA> netcat -l 4444 > /tmp/file1
+hostB> echo "cats suck dogs rule" > myfile
+hostB> nc hostA 4444 < myfile
+hostA> cat /tmp/file1
+cats suck dogs rule
+NPING (part of nmap pkg)
+
+send TCP packets over port 22, 80 and 443, send 500 packets at rate of 60 packets / sec with sleeptime of 3 seconds between attempts
+
+(for UDP use --udp [hostname/IP]
+
+nping --tcp nycweb01 -p 80,443,22 -c 500 -rate 60 --delay 3
+
+send ARP request to all hosts on subnet
+
+nping -arp 192.168.30.0/24
+
+send ICMP echo
+
+nping nycweb01 -icmp -icmp-type echo
+
+send packets to ports 20-35
+
+nping -tcp nycweb01 -p20-35
+
+send UDP packets
+
+nping -udp -c 2 -p 23000 <target>
+
+To spin up webserver on specific network interface,
+
+python -c 'import BaseHTTPServer as bhs, SimpleHTTPServer as shs; bhs.HTTPServer(("192.168.200.99", 8331), shs.SimpleHTTPRequestHandler).serve_forever()'
+check ports using nmap
+
+nmap localhost
+PORT STATE SERVICE
+22/tcp open ssh
+25/tcp open smtp
+80/tcp open http
+89/tcp open su-mit-tg
+NMAP
+
+check subnet for open ports
+
+nmap -sP -PS22,3389 192.168.30.1/24
+DNS
+Check DNS routing
+
+host github.com
+github.com has address 192.30.253.113
+github.com has address 192.30.253.112
+github.com mail is handled by 10 ALT3.ASPMX.L.GOOGLE.com.
+Dig into DNS query
+
+dig www.domain.com
+check all DNS name servers
+
+cat /etc/resolv.conf
+get your public IP from google
+
+dig +short myip.opendns.com @resolver1.opendns.com
+124.245.66.135
+or this
+
+curl -4 icanhazip.com
+Check all open network connections
+
+lsof -i
+Check which procs are holding up deleted files
+
+lsof +L1
+check output of df vs du
+
+df shows total usage including file descriptors, du shows actual usage
+kill any procs holding up "deleted" file descriptors, will show reduction of used space
+
+Get true Timezone
+curl https://ipapi.co/timezone
+Multicast
+
+see what MC groups are present
+
+ip maddr
+Network Utilities
+hping3 - like ping but can connect to ports and use TCP
+
+iftop - iface network activity top
+
+ss - better version of netstat (ss -ap4)
+
+iptraf - interface and network cmd line gui tool (very good)
+
+Kill a TCP session w/o killing process (will only kill new connections, not Established)
+
+yum install dsniff
+tcpkill -i eth0 port 28394
+kill Established TCP connection via port (doesnt kill parent process)
+
+lsof -np <PID of Parent> | grep <IP of remote host> (get the FD number, 4th column)
+
+gdb -p <PID of parent> --batch -ex 'call shutdown(FD #)'
+ie, need to kill this specific TCP session but not kill MyApp (this app has other TCP established connections)
+
+tcp 0 0 192.168.38.21:25959 108.124.250.173:50443 ESTABLISHED 221955/MyAPP
+
+lsof -np 221955 | grep 108.124.250.173
+risk_gate 221955 qbsim 17u IPv4 2857516568 0t0 TCP 192.168.38.21:25959->108.124.250.173:51212 (ESTABLISHED)
+FD id = 17u (update), now free up this file descriptor
+
+gdb -p 211955 --batch -ex 'call shutdown(17u, 2)'
+Close File descriptor without killing the process (ie proc is up but file is deleted)
+check for deleted files
+
+lsof +L | grep deleted | grep <filename> (get PID of this proc)
+get ID of FD (4th column of lsof output), ie 43w
+
+detach file descriptor from proc
+
+gdb -p <PID> --batch -ex 'p close(43)'
+---
+
+IPTables
+show all rules
+
+iptables -L -n -v
+
+show all FORWARD rules
+
+iptables -L FORWARD --line-numbers
+
+delete a rule
+
+iptables -D FORWARD <line number>
+
+check existing NAT rules
+
+iptables -t nat -v -L POSTROUTING --line-number
+
+iptables -t nat -v -L PREROUTING --line-number
+
+forward any request from ServerA port 80 to ServerB port 80
+on server A
+
+iptables -t nat -A PREROUTING -p tcp --dport 80 -j DNAT --to-destination <IP of serverB>:80
+
+iptables -t nat -A POSTROUTING -p tcp -j MASQUERADE
+
+change outgoing packets IP header
+
+iptables -t nat -A POSTROUTING -d <destination IP> --dport <PORT> -j SNAT --to-source <IP you want to change to>
+
+forward an OUTGOING packet for a specific port (going from host A), to another host (host B)
+
+host A>
+
+iptables -t nat -A OUTPUT -p tcp --dport 8331 -j DNAT --to-destination 10.182.26.8:8331
+
+allow all connections from an IP
+
+iptables -A INPUT -s 59.50.131.179 -j ACCEPT
+
+forward a packet going to a specific hostname and port to another hostname:port
+
+iptables -t nat -A PREROUTING -p tcp -d 18.224.251.4 --dport 22 -j DNAT --to-destination 192.168.10.22:22
+
+completely flush all chains, rules, filter, raw, mangle, etc
+## allow all incoming connections to avoid being locked out
+iptables -P INPUT ACCEPT
+# flush custom chains, nat, raw, security, mangle, filter rules
+iptables -X
+iptables -t nat -F
+iptables -t raw -F
+iptables -t security -F
+iptables -t mangle -F
+iptables -F
+
+save all IPTABLES rules permanently
+
+iptables-save > /etc/sysconfig/iptables
+
+restore from file
+
+iptables-restore < /tmp/backup.iptables
+
+add Debug log to prerouting rule #3 (tail syslog)
+
+iptables -t nat -I PREROUTING 3 -j LOG
+
+allow SSH port 22 only from address 190.120.30.3, block all others
+
+iptables -I INPUT -p tcp '!' -s 190.120.30.3 --dport 22 -j REJECT
+
+allow SSH port for specific address
+
+iptables -A INPUT -p tcp -s 190.120.30.3 --dport 22 -j ACCEPT
+
+block port
+
+iptables -A OUTPUT -p tcp --dport 2500 -j DROP
+
+allow a port
+
+iptables -A INPUT -p tcp --dport 2500 -j ACCEPT
+
+allow an IP address
+
+iptables -A INPUT -p tcp -s 192.168.3.5 -j ACCEPT
+
+iptables -A OUTPUT -p tcp -d 192.168.3.5 -j ACCEPT
+
+block an IP address
+
+iptables -A INPUT -s 192.130.2.4 -j DROP
+
+block range of IPs
+
+iptables -A INPUT -s 192.168.2.0/24 -j DROP
+
+allow range of ports (1200 and 5000-6000)
+
+iptables -A INPUT -p tcp --match multiport --dports 1200,5000:6000 -m conntrack -j ACCEPT
+
+redirect port to another port on same host
+
+iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 25 -j REDIRECT --to-port 2525
+
+create a custom CHAIN
+
+iptables -N My-Custom-Rules
+
+Packages / Libs / Modules
+show installed software
+
+Debian distro
+dpkg -l
+apt-cache search [pkg name]
+
+Fedora distro
+yum list installed
+rpm -qa | grep [pkg name]
+yum search [pkg name]
+
+RPM install package
+rpm -i pkg.rpm
+rpm -i mypkg.rpm --force (force install)
+rpm -i mypkg.rpm --nodeps (ignore dependencies)
+
+what RPM does a file belong to?
+rpm -qf /usr/bin/mysqlaccess
+
+show files inside installed RPM package
+rpm -ql package-name
+
+show files inside local uninstalled RPM package
+rpm -qpl local-file.rpm
+
+Show libraries for a program
+ldd /bin/ls
+
+refresh YUM cache
+yum clean expire-cache|
+yum clean all
+
+show dependency for a package
+yum -q deplist $pkg
+
+see install/upgrade history
+yum history
+
+get info on specific yum transaction
+yum history info <# of transaction>
+
+rollback yum patch
+yum history undo <# of transaction>
+
+rebuild cached library list or add new libs
+
+vi /etc/ld.so.conf
+
+ldconfig
+
+Install package including its dependencies, example 'mysql'
+
+yum deplist mysql | awk '/provider:/ {print $2}' | sort -u | xargs yum -y install
+
+show installed packages by disk space usage (Centos)
+rpm -qa --queryformat '%10{size} - %-25{name} \t %{version}\n' | sort -n
+
+Modules
+show custom modules
+
+dkms status (yum install dkms)
+show loaded modules
+
+lsmod | grep <modname>
+load module (insert)
+
+insmod /lib/modules/<kernel version>/kernel/drivers/<etc>
+unload module
+
+rmmod /lib/modules/<kernel version>/kernel/drivers/etc
+same but using modprobe w/o needing path to modules
+
+insert/load: modprobe <modname>
+remove: modprobe -r <modname>
+Process / Init / CPU
+get uptime of a process
+
+ps -p $$ -o etime=
+where $$ is PID, result is in format dd-hh:mm:ss
+
+find PID of a process (add to .bashrc)
+
+function pid() { ps -fU $USER | grep $1 | grep -v "grep" | grep -v "ps -fU" ;}
+Run process in background (use & to push to background)
+
+./run_script.sh &
+Get current PID
+
+$$
+kill all processes by name (with confirmation)
+
+pkill -f $name
+
+kill process by Port
+
+fuser -k 5100/tcp
+
+kill process by owner name
+
+killall -u username
+
+find process by name, kill all
+
+ps -ef | grep "vault server" | grep -v grep | awk '{print $2}' | xargs kill -9
+
+show all procs and their children
+pstree -ap
+
+show 4 way scrollable process tree
+
+ps awwfux | less -S
+
+show all processes and children
+
+ps -ef --forest
+
+show # of processes per user
+
+ps hax -o user | sort | uniq -c | sort -r
+
+kill a process running on Port 8331
+
+kill -9 $(lsof -i :8331 | awk '{l=$2} END {print l}')
+
+get amount of open file descriptors by user
+
+lsof -u <username> | wc -l
+
+
+NTP
+check offset of time between 2 servers,
+
+[23:38 root@web1:~ ]# ntpdate -q web2
+
+server 10.112.42.8, stratum 2, offset 0.005212, delay 0.02580
+
+13 Aug 23:39:01 ntpdate[17325]: adjust time server 10.182.48.8 offset 0.005212 sec
+
+offset of less than 5/1000s of a second
+
+check offset against timeserver
+
+ntpq -p
+
+run in debug
+
+ntpdate -dv <name of timeserver>
+
+Synchronize time w another host over SSH (server2 has correct date)
+
+date --set="$(ssh user@server2 date)"
+
+Hide processes and PIDs for non-root users
+
+edit /etc/fstab
+
+proc /proc proc defaults,hidepid=2 0 0
+
+remount
+
+mount -o remount,rw,hidepid=2 /proc
+
+to add an exception for a group/user (let this group see other PIDs), add 'gid' & remount
+
+proc /proc proc defaults,hidepid=2,gid=joe 0 0
+
+Isolate CPUs for specific processeses
+
+grubby --default-kernel
+
+/boot/vmlinuz-3.10.0-862.14.4.el7.x86_64
+
+grubby --info=/boot/vmlinuz-3.10.0-862.14.4.el7.x86_64
+
+args="ro no_timer_check console=tty0 console=ttyS0,115200n8 net.ifnames=0 biosdevname=0 elevator=noop crashkernel=auto LANG=en_US.UTF-8"
+
+## get current islated cores
+
+cat /sys/devices/system/cpu/isolated
+
+## add cpu isolation
+
+grubby --update-kernel=/boot/vmlinuz-3.10.0-862.14.4.el7.x86_64 --args=isolcpus=2,3
+
+reboot host to pickup changes
+
+## remove isolation
+
+grubby --remove-args="isolcpus=2,3" --update-kernel=<kernel name>
+
+Run command with a process "niceness" or priority (-20 highest priority, 19 lowest)
+
+nice -18 cat /etc/hosts
+Check new incoming connections on port, live
+
+ss -nap | grep 4433
+Change a running program's priority (change to priority 7, PID 168390 for all processes running by users 'root' and 'joe'
+
+renice 10 168390 -u root joe
+Systemctl
+show all enabled services
+
+systemctl list-unit-files | grep enabled
+show all running services
+
+systemctl list-units --type=service --state=running
+start / stop / status / refresh / reload / enable / disable / show
+
+systemctl start httpd.service
+analyze bad startup script
+
+systemd-analyze verify monit.service
+refresh sysctl
+
+systemctl daemon-reload
+I/O
+
+monitor high disk IO
+
+* * * * * root /usr/sbin/iotop -botqqqk --iter=60 | grep -P "\d\d\.\d\d K/s" >> /var/log/iotop
+
+Limit CPU usage for a process #2240 to 50% of CPU and also its child procs
+
+cpulimit -pid 2240 -l 50 -i
+
+Taskset and NUMACTL
+
+start a process on only 1st CPU core
+
+taskset -c 0 /bin/nginx
+
+for multiple CPU affinity
+
+nohup taskset -c 0,1,2,5 /bin/program
+
+get range of CPUs on which process can run on (affinity)
+
+taskset -cp <PID>
+
+get CPU on which a PID is running on
+
+ps -mo pid,tid,fname,user,psr -p <PID>
+
+pin processes to specific CPUs that are isolated (by default, numa does not allow pin to isolated CPUs, must use ALL option)
+
+cat /proc/cmdline
+
+isolcpus=2,3
+
+nohup numactl --all -C 2,3 /bin/myprogram
+
+find User and Parent PID of a zombie process thats holding up a port
+
+#1 get the iNODE
+
+root@min1# netstat -ltpnae | awk 'NR==2 || /:18100/'
+
+Proto Recv-Q Send-Q Local Address Foreign Address State User Inode PID/Program name
+
+tcp 1 0 0.0.0.0:18100 0.0.0.0:* LISTEN 1000 24444060 -
+
+tcp 1 0 192.168.37.5:18100 208.224.250.11:1046 CLOSE_WAIT 0 0 -
+
+#2 search by iNODE
+
+root@min1# lsof | awk 'NR==1 || /24444060/'
+
+COMMAND PID TID USER FD TYPE DEVICE SIZE/OFF NODE NAME
+
+trading_engine 138517 138529 joe 50u IPv4 24444060 0t0 TCP *:18100 (LISTEN)
+
+run program in background, no output
+nohup programName 2>&1 &
+
+clear abrtd messages
+
+if getting abrtd-cli timed out
+check /var/spool/abrt or /usr/local/spool/abrt
+remove old abrt files, restart abrtd service
+
+Generate Core Dump file into specific location
+sysctl -w kernel.core_pattern = /mnt/core.%e.%p.%h.%t
+
+add core limits, set limit of core size to 5mb - 4096 bytes per block
+5(MB) * 1024 * 1024 / 4096
+1mb = 256 blk
+1gb = 262,144 blk
+
+
+vim /etc/security/limits.conf
+joe soft core 1280 (4096 bytes per block, 5MB core = 1280 blocks)
+
+joe hard core 1280
+
+check core limits (start new session as Joe)
+joe> ulimit -a
+create new background proc
+joe> nohup python -m SimpleHTTPServer &
+kill proc to generate core file
+joe> kill -s SIGTRAP $(pgrep python)
+
+User / Group / Sudo
+USERS
+create new user
+
+adduser eric
+add user to Group
+
+usermod -aG mygroup eric
+remove user from Group
+
+gpasswd -d <user> <group>
+add user to multiple groups
+
+usermod -aG group1,group2,group3 eric
+change UID for user
+
+usermod -u 2550 eric
+change GID for user
+
+groupmod -g 2550 eric
+lock a user account
+
+passwd -l eric
+unlock user account
+
+passwd -uf eric
+delete a user's password
+
+passwd --delete eric
+change user's shell
+
+usermod --shell /bin/bash eric
+remove expired password requirements for user
+
+chage -m 0 -M 99999 -I -1 -E -1 jsmith
+remove user from group
+
+gpasswd -d joe wheel
+create a nologin user (no home dir)
+
+useradd -r joe
+or
+adduser -r -s /bin/nologin jsmith
+create user Joe with custom home dir, custom ID 999, custome group ID 555, add to 2 groups (corp, webadmins)
+
+useradd -d /var/home/joe -u 999 -g 555 -G corp,webadmin joe
+via Perl
+
+adduser --home /var/home/joe -u 999 -g 555 -G corp,web joe
+GROUPS
+add new group
+
+groupadd mygroup
+remove group
+
+groupdel mygroup
+modify group ID
+
+groupmod -g 999 mygroup
+change group name
+
+groupmod -n newgroup oldgroup
+show what cores a process is running on
+
+for i in $(pgrep <name of process>); do ps -mo pid,tid,fname,user,psr -p $i;done
+allow user to run command as another user (joe can run htop command as fred)
+vi /etc/sudoers.d/htop
+joe ALL=(fred) NOPASSWD: /bin/htop
+
+joe> sudo -u fred /bin/htop
+
+
+Check sudoers syntax
+visudo -cf /etc/sudoers.d/mysudo
+File / Dir
+Rsync
+
+sync files from one Dir1 to Dir2
+
+rsync -azP dir1/ dir2 ## -z flag is compression
+
+-azP flag is used to compress file (z), and P for partial, it will only rsync deltas instead of starting all over from scratch
+
+RSYNC file to a remote system's /tmp dir
+
+rsync -azP file1 root@remotesystem:/tmp
+
+rsync and exclude logs, png
+
+rsync -azP --exclude={*.log,*.png} server1:/tmp/dir /tmp
+
+Pull file from a remote system to a local /tmp dir
+
+rsync -azP root@remotesystem:/opt/file1 /tmp
+
+If Rsync not found, use path
+
+--rsync-path=/usr/bin/rsync
+
+Rsync using a hop server (A > B > C)
+
+assuming you can ssh joe@A > joe@B
+
+and can ssh from joe@B > joe@C
+
+rsync -azP -e "ssh -A joe@B ssh" file1 joe@C:/tmp
+
+will rsync local file1 via B, into C
+
+if Rsync versions dont match up, can also do this, (rsyncs file on C to localhost via B)
+
+rsync -azP -e 'ssh -o "ProxyCommand ssh -A joe@B nc %h %p"' joe@C:/tmp/xferfile .
+
+
+rsync - set mod and ownership on incoming files/dirs,
+
+hostA> ls -la /home/joe
+
+drwxrwsr-x. 3 joe groupA 21 Sep 16 2018 tmp/
+
+hostB> rsync -azP --chmod 644 --chown=mary:accounting hostA:/home/joe/tmp .
+
+hostB> ls -la
+drw-r--r-- mary accounting /tmp
+
+Rsync using specific SSH keys
+
+Sort file
+sort -d filename ## alphabetically
+sort -r filename ## reverse order
+sort -n filename ## numeric sort
+sort -M filename ## sort by month date
+
+SSHFS
+
+sudo sshfs -o allow_other,defer_permissions root@xxx.xxx.xxx.xxx:/ /mnt/droplet
+
+copy all files to destination except for whatever is in .gitignore
+
+cp -r !($(cat .gitignore)) /tmp/dest
+
+mount NFS share
+
+yum install nfs-utils nfs-utils-lib
+
+service nfs start
+
+mount -t nfs <serverIP>:/path/of/mount /mnt/point
+##nfs-ubuntu;;apt update &&  apt install nfs-common -y:showmount --exports 192.168.1.109:mount -t nfs 192.168.1.109:. /media/ub2/65271f04-f473-4cc9-bc73-21f62289a6b1/nfs.24.11.22/;ls /media/ub2/65271f04-f473-4cc9-bc73-21f62289a6b1/nfs.24.11.22/;;
+
+
+remove first 500 lines of a file, in place (shrink a log file)
+
+sed -i -e 1,500d file.log
+reduce log file to 200b
+
+truncate -s 200 file.log
+User & Group Permissions
+
+give 'sysadmin' Group 777 permission to a dir /opt/test
+
+chmod g+rwx /opt/test
+change group ownership for symlink (recurse down)
+
+chgrp -Rh mygroup /home/user/dir
+add execute bit for group on all folders
+
+find . type -d | xargs chmod g+x
+change group ownership of a dir
+
+chgrp sysadmins /opt/test
+Get ACL on a directory
+
+getfacl /opt/test
+give Sysadmins group 777 to /opt/test
+
+setfacl -m group:sysadmins:rwx /opt/test
+to set recursively down,
+
+setfacl -Rm u:joe:rwx /home/mary
+remove ACL
+
+setfacl -x user:antony /opt/test
+give r/w access to /home/user1 and preserve SSH security
+
+chmod 750 /home/user1
+setfacl -m user:user2:rw /home/user1
+remove all ACLs from file or dir
+
+setfacl -b /home/user1
+set a default ACL for a directory (all new files or dirs created in this directory will inherit ACL permissions)
+
+setfacl -d -m u::rwx,g::rwx,o::r- /opt/testdir
+setfacl -Rdm u:joe:rwx /opt/somedir
+Backup and restore all permissions
+
+make a backup of all permissions in a directory,
+
+getfacl -R /home/user > /tmp/permissions_backup
+restore all perms recursively
+
+setfacl --restore=/tmp/permissions_backup
+ensure all files and dirs created by user, inherit the Group permission of parent directory (SUID bit) - this example gives Joe rwx, gives group "employees" only Read (directories get set with X in order for group members to 'ls' to them), all others have no access to this folder or subfolders
+
+1. chgrp -Rh employees /home/joe
+2. setfacl -d -Rm u::rwX,g::rX,o::- /home/joe
+3. chmod -R g+s /home/joe (set S bit to inherit parent permissions for all new subfolders)
+4. chmod -R g-w /home/joe (removes write perms for group inside joe's home folder)
+add timestamp to a tail of log file
+
+tail -f /var/log/messages | while read ; do echo "$(date +%T.%N) $REPLY" ; done
+copy all ssh keys for every user from 1 host to another
+
+host1> for i in $(ls /home);do rsync -azP /home/$i/.ssh/id_rsa* host2:/home/$i/.ssh/ ;done
+Logrotate
+
+place all logrotate confs in /etc/logrotate.d
+
+/var/log/httpd/*log {
+
+rotate 3 # how many rotated files to keep left over
+
+size 10MB # rotate if log exceeds this
+
+daily # rotate on daily basis unless size max criteria is met first
+
+maxage 20 # delete old rotate files over 20 days
+
+compress # gzip compress rotated files
+
+missingok
+
+notifempty
+
+sharedscripts
+
+postrotate
+
+/sbin/service httpd graceful 1>/dev/null 2>&1 || true
+
+endscript
+
+}
+
+Searching
+
+find all files larger than 100M
+
+find /home -xdev -type f -size +100M | xargs du -sh | sort -hr
+
+Find 10 largest files
+
+find . -type f -print0 | xargs -0 du | sort -n | tail -10 | cut -f2 | xargs -I{} du -sh {}
+
+another way
+
+find /home -type f -exec du -Sh {} + | sort -rh | head -n 5
+
+find all files created in last 120 minutes
+
+find / -cmin 120
+
+Find 10 largest dirs
+
+find . -type d -print0 | xargs -0 du | sort -n | tail -10 | cut -f2 | xargs -I{} du -sh {}
+
+find 25 largest files in current dir and its subdirs
+
+find . -type f -exec ls -al {} \; | sort -nr -k5 | head -n 25
+
+find duplicate files, (based on MD5 hash)
+
+find -type f -exec md5sum '{}' ';' | sort | uniq --all-repeated=separate -w 33
+
+find specific user's files
+
+find . -user <username> -print
+
+recursively remove all empty subdirs
+
+find . -depth -type d -empty -exec rmdir {} \;
+
+find all hard links to a file
+
+find /path/to/dir -xdev -samefile <name of file>
+
+find the latest modified files (recursively)
+
+find . -type f -exec stat --format '%Y :%y %n' "{}" \; | sort -nr | cut -d: -f2- | head
+
+find files modified or created in last 2 days
+
+find /dir -newermt "2 days ago" -ls
+
+Show top 10 largest open files
+
+lsof / | awk '{ if($7 > 1048576) print $7/1048576 "MB" " " $9 " " $1 }' | sort -n -u | tail
+
+show 10 largest files in a directory
+
+du -a /opt/blah | sort -n -r | head -n 10
+
+list by size(-S), human readable(-h), all(-a), reverse date order (-r), list (-l), date (-t)
+
+find files older than 300 days, display them
+
+find /tmp -type f -mtime +300 -print | xargs ls -lha
+
+now delete them
+
+find /tmp -type f -mtime +300 -print | xargs rm
+
+Find and Search
+
+find -name filename ## any file
+
+Find recursively any hidden file
+
+find /dirname -name ".*" -print
+
+show only hidden files and directories
+
+ls -l -d .[!.]?*
+
+Find in specific dir
+
+find /tmp -name myfile
+
+Find file in specific location larger than 20MB
+
+find /tmp -size +20M
+
+Find files larger than 20MB and older than 360 days, delete them
+
+find /tmp -type f -size +20M -mtime +300 -print | xargs rm
+
+get last element
+
+echo /my/dir/name/backups/someFile.tar | awk -F"/" {'print $(NF)'}
+
+someFile.tar
+
+or another way,
+
+basename /my/dir/name/backups/someFile.tar // someFile.tar
+
+compare contents of 2 directories
+
+diff <(cd </path/to/dir1> && find | sort) <(cd </path/to/dir2> && find | sort)
+
+Freeze (lock) a directory or file from being modified (ACL, permissions, ownership,etc) - only root can unlock this. NOTE - this also prevents creating new files, this "freezes" the dir completely.
+
+chattr +i <dir name> (locks dir)
+
+chattr -i <dir name> (unlocks)
+
+filesystem shows 100% usage, but actual usage is much less (FS has too many inodes open)
+1. check amount of free inodes on mount (ie, /home shows 100% usage)
+df -i (check INode column)
+
+2. see which files are from dead procs
+
+lsof +L1 | grep /home | awk '{$7=$7/1048576 " MB"}1'
+
+3. unmount directory
+
+umount /home
+
+4. repair FS (check which block device with lsblk)
+
+xfs_repair /dev/sda1
+
+5. remount (mount -a)
+
+Compression / Cron / Mount / Encryption
+mount ISO
+
+mount -t iso9660 -o loop /home/tecmint/Fedora-18-i386-DVD.iso /mnt/iso/
+unmount ISO
+
+umount /mnt/iso
+Compression
+compress using bz2
+
+tar cvfj mydir.tar.bz2 /home/mydir
+untar tar.bz2 file
+
+tar -xvf file.tar.bz2
+compress a file XZ format ( best compression )
+
+tar -cvpJf mydir.tar.xz /home/user/mydir
+Untar a XZ tarball
+
+tar xf filename.tar.xz
+uncompress XZ file
+
+unxz file.xz
+tar a file or dir into tar.gz
+
+tar zcvf name.tar.gz file1 dir1 dir2
+untar and unzip
+
+tar -xvzf file.tar.gz
+untar .tgz
+
+tar xzvf file.tgz
+
+compress using LZMA
+tar -cavvf file.tar.lzma file
+
+uncompress LZMA to a directory
+tar -xavvf file.tar.lzma -C <dir>
+see whats inside a tar
+
+tar -tvf mydir.tar
+untar single file from tar.gz (for bz2, replace tar.gz with tar.bz2)
+
+tar --extract --file=mydir.tar.gz file1
+untar multiple files using wildcard
+
+tar -zxvf mydirs.tar.gz --wildcards '*.php'
+create a symlink
+
+ln -s <path to actual binary> <target location>
+ln -s /usr/local/bin/myapp /usr/bin/myapp
+download entire website down to local level (and convert links to local) Wget Mirror
+
+wget -mk www.google.com
+download a file using curl
+
+curl -O -u<USERNAME>:<API_KEY> -X GET https://api.bintray.com/packages/orgname/repo_name/pkg_name/logs/downloads-03-12-2016.csv.gz
+Audit
+show status of audit system
+
+auditctl -s
+show all audit rules
+
+auditctl -l
+clear all rules
+
+auditctl -D
+monitor file for any changes
+
+auditctl -w /etc/filename -p wa -k myfile_changes
+see any changes done to file
+
+ausearch -k myfile_changes
+save audit rules permanently
+
+add to /etc/audit/rules.d/audit.rules
+-w /etc/filename -p wa -k myfile_changs
+check user actions by user name, from yesterday to now,
+
+ausearch -ua joe -ts yesterday -te now -i
+search by specific command and specific directory that was deleted
+ausearch -f /tmp/testdir -x /bin/rm
+
+search by type of event
+ausearch -ua joe -m SYSCALL (or EXECVE)
+search by time range
+
+ausearch -ua joe --start 09/09/2019 '12:04:00' --end 09/12/2019 '12:22:00'
+search by parsing a specific log file
+
+ausearch -ua joe --input /tmp/audit.log
+get list of failed login attempts by user and IP where theyre coming from
+
+last -f /var/log/btmp
+FTP / LFTP
+
+ftp a file providing username + password
+
+lftp sftp://"user:password@host" -e "put -O path/on/target /tmp/file.txt
+check JSON formats for multiple files
+
+install jsonlint and check format
+
+npm install jsonlint -g
+$ for i in $(ls | grep *.json); do jsonlint $i; done
+Cron
+
+show all crons for a user
+
+crontab -l -u <username>
+edit crons for your user
+
+crontab -e
+execute cron manually
+
+run-parts /var/spool/cron
+Test Email
+
+yum install mailx
+mail -s "test email" user@company.com < /dev/null
+Centos Xauthority (graphical gui)
+
+yum install -y xorg-x11-server-Xorg xorg-x11-xauth xorg-x11-apps
+grep -i X11Forwarding /etc/ssh/sshd_config (should be set to Yes)
+ssh to box
+
+ssh -X name@box
+xclock (test)
+SYSCTL
+show all current values
+
+sysctl -a
+write new value
+
+sysctl -w vm.swappiness=2
+load values from file
+
+sysctl -p /etc/sysctl.conf
+monitor a command (run command repeatedly)
+
+watch -n 5 free -h (runs free -h every 5 sec)
+ENCRYPTION
+OpenSSL
+check cert expiration with OpenSSL
+
+cat mycert.crt | openssl x509 -noout -enddate
+Encrypt a file
+
+openssl enc -aes-256-cbc -salt -in myFileUnencrypted.txt -out myFileEncrypted.txt.enc -k myPASSWORD
+Unencrypt File
+
+openssl enc -aes-256-cbc -in MyFileEncrypted.txt.enc -out myFileUnencrypted.txt
+<type in password>
+7ZIP
+
+install 7zip on centos
+
+wget https://www.mirrorservice.org/sites/dl.fedoraproject.org/pub/epel/7/x86_64/Packages/p/p7zip-16.02-10.el7.x86_64.rpm
+wget https://www.mirrorservice.org/sites/dl.fedoraproject.org/pub/epel/7/x86_64/Packages/p/p7zip-plugins-16.02-10.el7.x86_64.rpm
+sudo rpm -U --quiet p7zip-16.02-10.el7.x86_64.rpm
+sudo rpm -U --quiet p7zip-plugins-16.02-10.el7.x86_64.rpm
+
+Encrypt a file
+
+7za a -tzip -p -mem=AES256 testfile.zip testfile (enter password)
+
+Decrypt a file
+
+7za e testfile.zip (enter password)
+GPG
+
+send an encrypted file to a recipient
+
+1. generate new gpg key pair
+
+sender> gpg --gen-key
+enter information including password and email address, password=S3nD3R
+
+fred.sender@sender.com
+
+if process is hanging on entropy, run the following to speed it up,
+
+haveged -n 50g -f - | dd of=/dev/null
+if password part is failing (may be due to TTY bug), run like this
+script /dev/null
+gpg --gen-key
+2. Export the pub key to the recipient
+
+sender> gpg --armor --output mypubkey.gpg --export fred.sender@sender.com
+email this pub key to recipient
+
+3.The reciever needs to generate their own public key w their own password and email
+
+Import the recipient's pubkey into your GPG chain (have the recipient send you their pub key and provide the email associated to the pub key)
+
+sender> gpg --import recipient-pubkey.gpg
+have the recipient import sender's pub key the same way
+
+4. Encrypt the file (has to be 1 single file, not multiple files or directories)
+
+encrypt using senders private key
+sender> gpg --output myFile.txt.gpg --encrypt --recipient joe.recipient@recipient.com myFile.txt
+this will generate a binary gpg file
+
+5. create a file signature (Checksum verification)
+
+sender> shasum -a 256 myFile.txt | awk '{print $1}' > myFile.txt.sha256sum
+sender> gpg --output myFile.txt.sha256sum.sig --sign myFile.txt.sha256sum (enter password: S3nD3R)
+(if shasum isnt installed, install with yum install -y perl-Digest-SHA)
+email both binary gpg and .sig files to the recipient
+
+6. Receiver unlocks the GPG file using the Reciever's password
+
+receiver> gpg --output myFile.txt --decrypt myFile.txt.gpg (enter receiver password)
+7. Verify the signature
+
+receiver> gpg --output myFile.txt.sha256sum --decrypt myFile.txt.sha256sum.sig
+additional
+check pub GPG keys on host
+
+gpg --list-keys --keyid-format LONG --fingerprint
+check priv keys
+
+gpg --list-secret-keys
+delete pub key from keyring
+
+gpg --delete-key D7B5FB7A (should be something like 2048R/D7BF5B7A)
+delete priv key from keyring
+
+gpg --delete-secret-key "Key name"
+check which GPG key was used to encrypt a file
+
+gpg --list-packets file.gpg
+Disk / Partitioning / FileSystem
+unmount volume
+
+umount /mnt/nas1
+if kernel is holding up NFS mount on a bad connection
+
+umount -l /mnt/nas1
+check what proc is holding up unmounting
+
+fuser -mv /mnt/nas1
+lsof | grep /mnt/nas1
+list all partitions
+
+fdisk -l
+Disk /dev/sda: 11.3 GB, 11286446080 bytes, 22043840 sectors
+
+Units = sectors of 1 * 512 = 512 bytes
+
+Sector size (logical/physical): 512 bytes / 512 bytes
+
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+
+Disk label type: dos
+
+Disk identifier: 0x000591a7
+
+Device Boot Start End Blocks Id System
+
+/dev/sda1 * 2048 1026047 512000 83 Linux
+
+/dev/sda2 1026048 22042623 10508288 8e Linux LVM
+
+Get ID and type of disk
+
+blkid
+
+Additional Disk checks
+
+check disk for errors
+
+fsck (only works for certain filesystems)
+check what kind of filesystem type
+
+df -T
+show volume groups
+
+vgdisplay
+extend volume group
+
+lvextend -r -L+25GB /dev/lvol/name
+Mount a NetApp device as a local filesystem
+
+mount -t nfs -o _netdev,rw,hard,intr,nosuid,dev,bg,nfsvers=3 netappNas01:/netbackup /netbackup
+add to /etc/fstab,
+
+netappNas01:/netbackup /netbackup nfs _netdev,rw,hard,intr,nosuid,dev,bg,nfsvers=3 0 0
+check if Disks are local or mounted SAN
+
+ls /dev/disk/by-path/ (SANs will have an IP next to path)
+Increase partition space via vCenter GUI
+
+Problem: current /opt only has 75G of available space, need to add another 20G
+
+df -h
+/dev/mapper/vg0-opt 80G 1.9G 75G 3% /opt
+add disk space in vCenter console, increasing disk from 100GB to 120GB
+
+on Centos box check name of scsi device,
+
+ls /sys/class/scsi_device/
+0:0:0:0
+rescan scsci bus
+
+echo 1 > /sys/class/scsi_device/0\:0\:0\:0/device/rescan
+check to see if extra space is visible,
+
+fdisk -l
+Disk /dev/sda: 128.8 GB
+fdisk /dev/sda
+
+type 'p' - prints out all partitions
+
+type 'n' - create new partition
+
+type 'p' - to make new partition
+
+select the next available sector (default), select default Last Sector
+
+type 'w' to save changes
+
+reboot the VM
+
+once rebooted, type 'fdisk -l', a new partition is added
+
+/dev/sda1 * 2048 2099199 1048576 83 Linux
+/dev/sda2 2099200 2508799 204800 6 FAT16
+/dev/sda3 2508800 209715199 103603200 8e Linux LVM
+/dev/sda4 209715200 251658239 20971520 83 Linux
+now extend your /dev/mapper/vg0-opt
+
+> vgs
+VG #PV #LV #SN Attr VSize VFree
+vg0 1 6 0 wz--n- 98.78g 0
+> vgextend vg0 /dev/sda4
+Volume group "vg0" successfully extended
+Check to see available PE space (shows 20G of available space)
+
+> vgdisplay
+Free PE / Size 639 / <19.97 GiB
+now resize to full available space, will show 94G of available space
+
+> lvextend -l +100%FREE /dev/mapper/vg0-opt
+> resize2fs /dev/mapper/vg0-opt
+> df -h
+/dev/mapper/vg0-opt 100G 1.9G 94G 2% /opt
+Create RAID1 with btrfs on 2 physical disks on Centos 7
+
+check disks
+
+lsblk
+NAME MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+sda 8:0 0 40G 0 disk
+└─sda1 8:1 0 40G 0 part /
+sdb 8:16 0 8G 0 disk
+sdc 8:32 0 8G 0 disk
+remove any existing partitions
+
+dd if=/dev/zero of=/dev/sdb bs=512 count=1
+partition each disk (if using entire disk, can skip this entire Partition section)
+
+fdisk /dev/sdb (do same with /dev/sdc)
+n (new partition)
+p (primary), select 1, enter, enter
+t (select for RAID type), enter "fd"
+w (write)
+RAID examine:
+
+mdadm --examine /dev/sd[b-c]
+Create RAID1
+
+mdadm --create /dev/md1 --level=mirror --raid-devices=2 /dev/sd[b-c]1
+(if no partitions present, remove 1 at end)
+
+mdadm: Note: this array has metadata at the start and
+may not be suitable as a boot device. If you plan to
+store '/boot' on this device please ensure that
+your boot-loader understands md/v1.x metadata, or use
+--metadata=0.90
+Continue creating array? y
+mdadm: Defaulting to version 1.2 metadata
+mdadm: array /dev/md1 started.
+check RAID
+
+mdadm --detail /dev/md1
+/dev/md1:
+Version : 1.2
+Creation Time : Fri Aug 28 17:23:24 2020
+Raid Level : raid1
+Array Size : 8382464 (7.99 GiB 8.58 GB)
+Used Dev Size : 8382464 (7.99 GiB 8.58 GB)
+Raid Devices : 2
+Total Devices : 2
+Persistence : Superblock is persistent
+Update Time : Fri Aug 28 17:24:06 2020
+State : clean
+Active Devices : 2
+Working Devices : 2
+Failed Devices : 0
+Spare Devices : 0
+Consistency Policy : resync
+Name : min1:1 (local to host min1)
+UUID : fae3d35a:862d0521:eb39400c:b9a794f0
+Events : 17
+Number Major Minor RaidDevice State
+0 8 17 0 active sync /dev/sdb1
+1 8 33 1 active sync /dev/sdc1
+create BTRFS filesystem
+
+mkfs.btrfs /dev/md1
+mount the filesystem
+
+mount /dev/md1 /home (or mountpoint)
+add to /etc/fstab
+
+/dev/md1 /home btrfs defaults 0 0
+create RAID config file
+
+mdadm -E -s -v >> /etc/mdadm.conf
+test RAID1 by simulating drive failure
+
+mdadm --manage --set-faulty /dev/md1 /dev/sdc1
+check RAID status (will show DEGRADED)
+
+mdadm --detail /dev/md1
+setup alerts for Disk failure, add to /etc/mdadm.conf
+
+MAILTO <your email addr>
+DEVICE partitions
+put scan in daemon
+
+mdadm --monitor --scan --daemonize
+add to kernel to start on boot
+
+vi /etc/rc.local
+
+add to bottom
+
+/sbin/mdadm --monitor --scan --daemonize
+Resize a logical partition
+
+Expand partition
+
+add space to Hard Disk on VM in vCenter or VirtualBox
+
+check all partitions, need to resize /opt its 30% full,
+[root@mrxsplunkidx02 joe]# df -h
+Filesystem Size Used Avail Use% Mounted on
+/dev/mapper/vg0-root 7.8G 1.1G 6.3G 15% /
+devtmpfs 1.9G 0 1.9G 0% /dev
+tmpfs 1.9G 0 1.9G 0% /dev/shm
+tmpfs 1.9G 8.6M 1.9G 1% /run
+tmpfs 1.9G 0 1.9G 0% /sys/fs/cgroup
+/dev/sda1 976M 110M 799M 13% /boot
+/dev/mapper/vg0-home 2.0G 7.0M 1.8G 1% /home
+/dev/mapper/vg0-opt 4.8G 1.4G 3.3G 30% /opt
+
+check logical space
+lvs
+appl vg0 -wi-ao---- 10.00g
+home vg0 -wi-ao---- 2.00g
+opt vg0 -wi-ao---- 5.00g
+root vg0 -wi-ao---- 8.00g
+swap vg0 -wi-ao---- 2.00g
+
+check available HD space,
+vgdisplay
+Free PE / Size 191 / 5.97 GiB
+Need to add another 5 Gigs to /opt
+lvextend -r -L +5G /dev/mapper/vg0-opt
+
+to extend ALL remaining free space,
+lvextend -l +100%FREE /dev/mapper/vg0-opt
+check the File System type of /opt
+mount | grep opt
+/dev/mapper/vg0-opt on /opt type ext4 (rw,relatime,data=ordered)
+extend physical space
+resize2fs /dev/mapper/vg0-opt
+check space again, its now 15% full
+df -h
+/dev/mapper/vg0-opt 9.8G 1.4G 8.0G 15% /opt
+
+check logical volume again,
+lvs
+opt vg0 -wi-ao---- 10.00g
+Shrink Partition
+
+need to shrink partition /appl from 2GB to 1GB
+
+lvs
+
+appl vg0 -wi-ao---- 2.00g
+
+docker vg0 -wi-ao---- 10.00g
+
+home vg0 -wi-ao---- 60.00g
+
+opt vg0 -wi-ao---- 5.00g
+
+root vg0 -wi-ao---- 8.00g
+
+swap vg0 -wi-ao---- 2.00g
+
+tmp vg0 -wi-ao---- 3.00g
+
+var vg0 -wi-ao---- 3.00g
+
+unmount it
+
+umount -v /appl
+get filesystem name
+
+df -h
+/dev/mapper/vg0-appl /appl
+check for file system error
+
+e2fsck -ff /dev/mapper/vg0-appl
+(must pass all 5 stages)
+
+reduce FS by 1GB
+
+resize2fs /dev/mapper/vg0-appl 1G
+reduce the logical volume
+
+lvreduce -L -1G /dev/mapper/vg0-appl
+mount /appl back on
+
+mount /dev/mapper/vg0-appl /appl
+check size of partition
+
+lvdisplay /appl
+--- Logical volume ---
+
+LV Path /dev/vg0/appl
+
+LV Name appl
+
+VG Name vg0
+
+LV UUID Aim8Q2-gxp2-jnT0-OcS2-d3To-n5Nd-IJmvxo
+
+LV Write Access read/write
+
+LV Creation host, time xxxx, 2018-02-23 11:52:48 -0500
+
+LV Status available # open 1
+
+LV Size 1.00 GiB Current LE 32 Segments 1
+
+Allocation inherit
+
+Read ahead sectors auto - currently set to 8192
+
+Block device 253:6
+
+Remove Swap LV and merge it into Root LV
+
+want to remove 4GB swap LV and merge it into root, to give root more space,
+
+/dev/mapper/centos-root 50G 1.2G 49G 3% /
+1. unmount and deactivate Swap LV
+
+lvchange -a n /dev/mapper/centos-swap
+2. remove it
+
+lvremove /dev/mapper/centos-swap
+3. extend Root volume
+
+lvextend -l +100%FREE /dev/mapper/centos-root
+4. Grow the Root volume
+
+resize2fs /dev/mapper/centos-root (if XFS filesystem, use xfs_growfs /dev/mapper/centos-root)
+Remove Swapfile from /home and create new Swap LVM
+
+swapoff -a
+
+Mount an EC2 volume as /home
+
+attach volume to instance
+
+on ec2:
+> lsblk
+should be listed as nvme1n1 or similar name
+
+get ID of volume
+
+> blkid (get UUID)
+> vi /etc/fstab
+
+UUID=<insert ID> /home xfs defaults 0 0
+remount
+
+> mount -a
+BTRFS
+
+check file on inode
+
+btrfs inspect-internal inode-resolve 154326924 /mnt/hc
+Extend diskspace on EC2 instance (T3)
+
+'/' currently at 94% usage
+
+/dev/xvda1
+go to EC2 console, click on instance > attached volumes > click on Volume > modify > expand, add the additional disk space
+root@host> lsblk
+xvda TYPE=disk
+---xvda1 TYPE=part /
+growpart /dev/xvda 1
+yum install xfsprogs
+xfs_growfs -d / ## will resize / partition to full
+Regex / awk / sed / tr
+find all lines starting with #
+
+^#.*$
+find blank line
+
+^\s*$
+SED
+
+Replace string in a file (write directly to file -i )
+
+sed -i -e "s/${prev_version}/${version}/g" bitbucket.service
+Replace anything between 2 delimeters "!!" with word "super"
+
+sed -e 's/!.*!/super/g' /etc/file
+remove whitespace
+
+sed -i "s/ //g" file
+remove 2nd line from top, from file
+
+sed -i '2,$d' file
+replace newline with comma
+
+sed ':a;N;$!ba;s/\n/ /g'
+Remove leading spaces and tabs
+
+sed 's/^[ \t]*//'
+Remove single spaces only (leave multiple spaces)
+
+sed 's/\(.\) //g'
+Reduce multiple spaces to one
+
+sed 's/ \+/ /g'
+Replace multiple newlines with a single newline
+
+sed '/^$/N;/^\n$/D' file.txt
+Delete text in a line between two markers {}
+
+sed -e 's/\({\).*\(}\)//'
+Remove empty lines
+
+sed '/^\s*$/d'
+Remove all but the first line matching pattern
+
+sed '2,${/pattern/d;}'
+Remove only the first line matching pattern
+
+sed '0,/pattern/{/pattern/d;}'
+Move the first line to the end of the list
+
+sed '1,1{H;1h;d;};$G'
+Remove non-alphanumeric characters from words
+
+sed 's/[^[:alnum:].-\ ]//g'
+Reduce multiple spaces to one for a line containing a string
+
+iostat | sed -n '/^sd/s/ \+/ /gp'
+insert "apple" into beginning of a file
+
+sed 's/^/apple /' file1
+insert apple into end of file
+
+sed 's/$/apple /' file1
+replace orange with apple, only on 3rd line of text
+
+sed '3s/orange/apple/g' file1
+replace orange with apple from 1st to 3rd line
+
+sed '1,3s/orange/apple/g' file1
+replace multiple words, orange with apple, red with blue
+
+sed 's/orange/apple/g; s/red/blue/g' file1
+remove 1st occurence of specific character "b"
+
+sed 's/b//' file1
+remove all instances of "b" in file
+
+sed 's/b//g' file1
+remove last character of every line
+
+sed 's/.$//' file1
+remove "b" only if its last character in line
+
+sed 's/b$//' file1
+remove all numbers in every line of a file
+
+sed 's/[0-9]//g' file1
+TR
+
+remove whitespace from string
+
+fields="$(echo -e "${fields}" | tr -d '[:space:]')"
+or use xargs
+
+echo $fields | xargs (will strip leading and trailing whtiespace)
+strip double quotes
+
+echo '"string"' | tr -d '"'
+Identify server’s primary IP address
+/sbin/ifconfig | sed -rn 's/127.0.0.1//;s/.*inet (addr:)?(([0-9]*\.){3}[0-9]*).*//p'
+
+split a string by a delimeter
+
+string="apple, cherry, banana"
+first=$(echo $string | cut -d',' -f1)
+second=$(echo $string | cut -d',' -f2)
+Remove non-printable characters from files
+tr -cd '-6' < infile > outfile
+
+examples taken from: https://www.igoroseledko.com/awk-sed-snippets-for-sysadmins/
+
+AWK
+Built-In AWK functions full list of functions
+
+to Uppercase
+awk -F: '{print toupper($1)}' file.txt
+NAME: JOE
+
+print entire line ($0)
+
+joe:employees:123
+bob:employees:222
+awk -F":" '{print $0}' file.txt
+
+Awk If-Else
+
+awk -F: '{if($1=="name") print $2;else print "NONE"}' file.txt
+joe
+find by Regex
+
+awk -F: '/ing$/' file.txt
+status: thinking
+occupation: moving
+print all values that match 1st column = "color"
+cat file.txt
+color: red
+size: 25
+color: blue
+size: 50
+
+awk -F: '$1 ~ /color$/ {print $2}' file.txt
+red
+blue
+
+split string by delimeter
+
+third=$(echo $string | awk -F"," '{print $3}')
+
+or use delimeter flag
+
+echo $string | awk '{print $1,$3}' FS=","
+Remove commas inside double-quotes
+awk -F'"' -v OFS='' '{ for (i=2; i<=NF; i+=2) gsub(",", "", $i) } 1'
+
+Remove duplicate words in a line
+
+awk '{ while(++i<=NF) printf (!a[$i]++) ? $i FS : ""; i=split("",a); print "" }'
+Remove duplicate lines in a file without sorting
+cat file | awk '!a[$0]++'
+
+Print number of characters for each line in a file
+awk '{ print length($0)"\t"$0; }' file.txt
+
+Begin and End Functions
+
+awk -F: 'BEGIN {print "this is beginning"} {print $0} END {print "End!"}' file.txt
+this is beggining
+name: joe
+End!
+remove all duplicate entries from a file
+
+awk '!x[$0]++' filename
+at file.txt
+apple,300
+grape,200
+grape,400
+apple,500
+banana,200
+
+print only lines with word "apple"
+
+awk '/apple/' file.txt
+
+print only "grape" record, print 2nd column only
+
+awk '$0 ~ /grape/{print $2}' file.txt
+print any line that does not contain "apple"
+awk '!/apple/' file.txt
+
+print any line that has grape or banana
+awk -F, '$1 ~ /^grape|^banana/' file.txt
+
+print any line where number is greater than 200
+awk -F, '$2>200' file.txt
+
+print any line thats greater than 200 or has "grape"
+
+Remove entire words containing non-alphabetic characters
+awk '{ofs=""; for (i=1; i<=NF; i++) if ($i ~ /^[[:alpha:]]+$/) {printf "%s%s", ofs, $i; ofs=OFS} print "" }'
+
+---------------------------------------------------
+
+Sample "temp" file
+ID1,223
+ID2,124
+ID3,125
+ID2,400
+Add up values in second column
+
+awk -F"," '{s+=$2}END{print s}' temp
+Add up the values in the second column only for ID2
+
+awk -F, '$1=="ID2"{s+=$2;}END{print s}' temp
+v="ID2"; awk -F, -v v="${v}" '$1==v{s+=$2;}END{print s}' temp
+List unique values in 1st column
+
+awk -F, '{a[$1];}END{for (i in a)print i;}' temp
+Add up values in the second column for each ID
+
+awk -F, '{a[$1]+=$2;}END{for(i in a)print i", "a[i];}' temp
+Remove only the first line matching pattern
+
+awk '!/pattern/ || f++'
+Remove all but the first line matching pattern
+
+awk '/pattern/&&f++ {next} 1'
+Show allocated disk space
+
+df -klP -t xfs -t ext2 -t ext3 -t ext4 -t reiserfs | grep -oE ' [0-9]{1,}( +[0-9]{1,})+' | awk '{sum_used += $1} END {printf "%.0f GB\n", sum_used/1024/1024}'
+Sysdig
+install sysdig
+
+curl -s https://s3.amazonaws.com/download.draios.com/stable/install-sysdig
+| sudo bash
+write to scap file, 200MB in size, keep only 5 files
+
+sysdig -C 200 -W 5 -w dump.scap
+search for specific port
+
+sysdig fd.port=8335
+search for specific process
+
+sysdig proc.name=sudo
+see every action done by every user
+
+sysdig -c spy_users
+
+Snap
+snap alias
+
+snap install python38
+snap alias python38 python3.8 (creates symlink /usr/bin/python3.8)
+Troubleshoot
+slow / frozen system
+
+check if procs are in uninterrupted sleep state (waiting for IO and causing slowness)
+ps aux (check STAT column, will show procs that are in uninterrupted sleep)
+
+check paging faults
+
+sar -B 2 5 will generate paging report, check majflt column, major faults per second, if high #, means system is out of RAM
+
+enable SysRQ to kill procs that are in 'uninterrupted sleep' state. SysRQ will respond even in frozen state (assuming command line is responsive)
+
+1. enable sysrq
+2. kill D state procs
+
+Check why a server rebooted
+sudo ausearch -i -m system_boot,system_shutdown | tail -4
+
+show all reboots
+journalctl --list-boots
+
+Augeas
+example file content: /etc/pam.d/password-auth
+
+auth required pam_env.so
+
+auth required pam_faildelay.so delay=2000000
+
+auth [success=1 default=bad] pam_unix.so nullok try_first_pass
+
+auth requisite pam_succeed_if.so uid >= 1000 quiet_success
+
+auth required pam_deny.so
+
+account required pam_unix.so
+
+account sufficient pam_localuser.so
+
+account sufficient pam_succeed_if.so uid < 1000 quiet
+
+account required pam_permit.so
+
+password requisite pam_pwquality.so try_first_pass local_users_only retry=3 authtok_type=
+
+password sufficient pam_unix.so sha512 shadow nullok try_first_pass use_authtok
+
+password required pam_deny.so
+
+session optional pam_keyinit.so revoke
+
+session required pam_limits.so
+
+-session optional pam_systemd.so
+
+session [success=1 default=ignore] pam_succeed_if.so service in crond quiet use_uid
+
+session required pam_unix.so
+
+password sufficient pam_unix.so remember=15
+
+auth required pam_faillock.so preauth audit silent deny=5 unlock_time=900
+
+auth [default=die] pam_faillock.so authfail audit deny=5 unlock_time=900
+
+auth sufficient pam_faillock.so authsucc audit deny=5 unlock_time=900
+
+password requisite pam_pwquality.so try_first_pass retry=3
+
+search through tree for specific string
+augtool> print /files/etc/pam.d/password-auth/*[module='pam_unix.so']/argument[. = 'remember=15']
+search using a Regex
+
+augtool> print /files/etc/pam.d/password-auth/*[module='pam_unix.so'][type='password'][control='sufficient']/argument[ . =~ regexp("remember=.*")]
+get last node of a tree
+
+augtool> print /files/etc/pam.d/password-auth/*[module='pam_unix.so'][type='password'][control='sufficient'][last()]
+add Argument value on last node, last argument position
+
+set /files/etc/pam.d/password-auth/*[module='pam_unix.so'][type='password'][control='sufficient'][last()]/argument[last()+1] 'remember=33'
+tar -xvjf filename.tar.bz2
+##debian11-iptables-nat;;iptables --table nat --append POSTROUTING --out-interface eth0 -j MASQUERADE;iptables --append FORWARD --in-interface eth1 -j ACCEPT;echo 1 > /proc/sys/net/ipv4/ip_forward;sysctl -w net.ipv4.ip_forward=1;;
+
+## grep "" /etc/systemd/network/* ; grep '^[^#]' /etc/dnsmasq.conf ;
+##debian11-route-static;;Другой способ создать статический сетевой маршрут — создать файл сценария в каталоге /etc/network/if-up.d . Для меня это предпочтительный способ создания статических маршрутов в Debian.
+
+Пример:
+
+Измените рабочий каталог на /etc/network/if-up.d , создайте файл my_route , измените права доступа на 751 и chmod 751 my_routeвставьте этот контент:
+
+/etc/network/if-up.d/my_route
+#!/bin/sh
+
+if [ "$IFACE" = "ens192" ]; then
+    ip route add 192.168.0.0/24 via 192.168.221.1
+    ip route add 192.168.1.0/24 via 192.168.221.1
+;Другой способ создать статический сетевой маршрут — создать файл сценария в каталоге /etc/network/if-up.d . Для меня это предпочтительный способ создания статических маршрутов в Debian.
+
+Пример:
+
+Измените рабочий каталог на /etc/network/if-up.d , создайте файл my_route , измените права доступа на 751 и chmod 751 my_routeвставьте этот контент:
+
+/etc/network/if-up.d/my_route
+#!/bin/sh
+
+if [ "$IFACE" = "ens192" ]; then
+    ip route add 192.168.0.0/24 via 192.168.221.1
+    ip route add 192.168.1.0/24 via 192.168.221.1
+;chmod 751 my_route;;
+﻿#!/bin/bash
+
+export IPT="iptables"
+
+# Внешний интерфейс
+export WAN=eth0
+export WAN_IP=85.31.203.127
+
+# Локальная сеть
+export LAN1=eth1
+export LAN1_IP_RANGE=10.1.3.0/24
+
+# Очищаем правила
+$IPT -F
+$IPT -F -t nat
+$IPT -F -t mangle
+$IPT -X
+$IPT -t nat -X
+$IPT -t mangle -X
+
+# Запрещаем все, что не разрешено
+$IPT -P INPUT DROP
+$IPT -P OUTPUT DROP
+$IPT -P FORWARD DROP
+
+# Разрешаем localhost и локалку
+$IPT -A INPUT -i lo -j ACCEPT
+$IPT -A INPUT -i $LAN1 -j ACCEPT
+$IPT -A OUTPUT -o lo -j ACCEPT
+$IPT -A OUTPUT -o $LAN1 -j ACCEPT
+
+# Рзрешаем пинги
+$IPT -A INPUT -p icmp --icmp-type echo-reply -j ACCEPT
+$IPT -A INPUT -p icmp --icmp-type destination-unreachable -j ACCEPT
+$IPT -A INPUT -p icmp --icmp-type time-exceeded -j ACCEPT
+$IPT -A INPUT -p icmp --icmp-type echo-request -j ACCEPT
+
+# Разрешаем исходящие подключения сервера
+$IPT -A OUTPUT -o $WAN -j ACCEPT
+#$IPT -A INPUT -i $WAN -j ACCEPT
+
+# разрешаем установленные подключения
+$IPT -A INPUT -p all -m state --state ESTABLISHED,RELATED -j ACCEPT
+$IPT -A OUTPUT -p all -m state --state ESTABLISHED,RELATED -j ACCEPT
+$IPT -A FORWARD -p all -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+# Отбрасываем неопознанные пакеты
+$IPT -A INPUT -m state --state INVALID -j DROP
+$IPT -A FORWARD -m state --state INVALID -j DROP
+
+# Отбрасываем нулевые пакеты
+$IPT -A INPUT -p tcp --tcp-flags ALL NONE -j DROP
+
+# Закрываемся от syn-flood атак
+$IPT -A INPUT -p tcp ! --syn -m state --state NEW -j DROP
+$IPT -A OUTPUT -p tcp ! --syn -m state --state NEW -j DROP
+
+# Блокируем доступ с указанных адресов
+#$IPT -A INPUT -s 84.122.21.197 -j REJECT
+
+# Пробрасываем порт в локалку
+#$IPT -t nat -A PREROUTING -p tcp --dport 23543 -i ${WAN} -j DNAT --to 10.1.3.50:3389
+#$IPT -A FORWARD -i $WAN -d 10.1.3.50 -p tcp -m tcp --dport 3389 -j ACCEPT
+
+# Разрешаем доступ из локалки наружу
+$IPT -A FORWARD -i $LAN1 -o $WAN -j ACCEPT
+# Закрываем доступ снаружи в локалку
+$IPT -A FORWARD -i $WAN -o $LAN1 -j REJECT
+
+
+# Включаем NAT
+$IPT -t nat -A POSTROUTING -o $WAN -s $LAN1_IP_RANGE -j MASQUERADE
+
+# открываем доступ к SSH
+$IPT -A INPUT -i $WAN -p tcp --dport 22 -j ACCEPT
+
+# Открываем доступ к почтовому серверу
+#$IPT -A INPUT -p tcp -m tcp --dport 25 -j ACCEPT
+#$IPT -A INPUT -p tcp -m tcp --dport 465 -j ACCEPT
+#$IPT -A INPUT -p tcp -m tcp --dport 110 -j ACCEPT
+#$IPT -A INPUT -p tcp -m tcp --dport 995 -j ACCEPT
+#$IPT -A INPUT -p tcp -m tcp --dport 143 -j ACCEPT
+#$IPT -A INPUT -p tcp -m tcp --dport 993 -j ACCEPT
+
+#Открываем доступ к web серверу
+#$IPT -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
+#$IPT -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
+
+#Открываем доступ к DNS серверу
+#$IPT -A INPUT -i $WAN -p udp --dport 53 -j ACCEPT
+
+# Включаем логирование
+#$IPT -N block_in
+#$IPT -N block_out
+#$IPT -N block_fw
+
+#$IPT -A INPUT -j block_in
+#$IPT -A OUTPUT -j block_out
+#$IPT -A FORWARD -j block_fw
+
+#$IPT -A block_in -j LOG --log-level info --log-prefix "--IN--BLOCK"
+#$IPT -A block_in -j DROP
+#$IPT -A block_out -j LOG --log-level info --log-prefix "--OUT--BLOCK"
+#$IPT -A block_out -j DROP
+#$IPT -A block_fw -j LOG --log-level info --log-prefix "--FW--BLOCK"
+#$IPT -A block_fw -j DROP
+
+# Сохраняем правила
+/sbin/iptables-save  > /etc/sysconfig/iptables
+##ffmpec-volume;;ffmpeg -i input.flac -filter:a "volume=0.5" output.flac;;
+
+iptables -t nat -A POSTROUTING -o eth0 -s 0.0.0.0/0 -j MASQUERADE
+echo 1 |  tee /proc/sys/net/ipv4/ip_forward
+sysctl net.ipv4.ip_forward
+sysctl -p
+iptables -t nat -A POSTROUTING -o интерфейс -j MASQUERADE
+##route-->server1--client1
+
+nft add table nat
+nft 'add chain nat postrouting { type nat hook postrouting priority 100 ; }'
+nft add rule nat postrouting ip saddr 10.0.0.0/8 oif eth0 snat to 192.168.1.122
+nft list ruleset
+nft list ruleset > new-rule-set.nft
+
+socat -,cfmakeraw,echo=0,escape=15 TCP4:localhost:
+##atop-htop-ps;;ps -eo cmd,%cpu --sort=%cpu;ps -eo mem,%cpu --sort=%mem
+#find /home -mount -type f -ls 2> /dev/null | sort -rnk7 | head -10 | awk '{printf "%10d MB\t%s\n",($7/1024)/1024,$NF}'
+
+ ps -e -o pid,user,%mem,command --sort %mem
+ssh -Y ub1@ub1 dbus-launch   pcmanfm-qt
+##smotret-prozessi;;
+ps -eo pid,pcpu,pmem,comm | sort -r -k3 | head -5;ps -eo pid,pcpu,pmem,comm | sort -r -k2 | head -5;
+###vittualbox-altmin-11.06.23;;
+socat -,cfmakeraw,echo=0,escape=15 TCP4:localhost:2300
+VBoxManage startvm router
+
+###python-pyneng;; cd /media/x-ub/0189-8470/pyneng-11/pyneng_course/; vagrant up ; Username: vagrant; Password: vagrant; https://docs.google.com/document/d/1tIb8prINPM7uhyFxIhSSIF1-jckN_OWkKaO8zHQus9g/edit;  git config --global user.name "username"; git config --global user.email "username.user@example.com";  git config --list; mkdir first_repo; cd first_repo; cd ~; git clone https://github.com/magicmonty/bash-git-prompt.git .bash-git-prompt --depth=1; vim .bashrc ; GIT_PROMPT_ONLY_IN_REPO=1; source ~/.bash-git-prompt/gitprompt.sh; exec bash;; git status; vi README; echo "test" >> README; .gitignore; *.un~; git add README; git status; git diff; git log; ssh-keygen -t rsa -b 4096 -C "rozhukalnv@gmail.com"
